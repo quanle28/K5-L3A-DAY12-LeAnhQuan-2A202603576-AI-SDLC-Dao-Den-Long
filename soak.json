@@ -1,0 +1,59 @@
+{
+  "nights": 10,
+  "crashes": 0,
+  "results": [
+    "lost",
+    "lost",
+    "lost",
+    "lost",
+    "lost",
+    "lost",
+    "lost",
+    "lost",
+    "lost",
+    "lost"
+  ],
+  "mem_start_mb": 16.2734,
+  "mem_end_mb": 16.3438,
+  "duration_s": 1.7181,
+  "pid": 6612,
+  "seed": 7,
+  "seeds": [
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16
+  ],
+  "night_order": [
+    1,
+    2,
+    3,
+    1,
+    2,
+    3,
+    1,
+    2,
+    3,
+    1
+  ],
+  "sim_ticks": [
+    3097,
+    1214,
+    2146,
+    4496,
+    4334,
+    1315,
+    974,
+    2342,
+    3126,
+    2292
+  ],
+  "rss_method": "psutil current RSS /1024² after first load and after final reset+gc; same PID",
+  "errors": []
+}

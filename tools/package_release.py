@@ -45,6 +45,10 @@ def main():
     notices=folder/'THIRD-PARTY'; notices.mkdir(exist_ok=True)
     for pattern in ('pygame-*.dist-info','psutil-*.dist-info'):
         for directory in (ROOT/'.runtime').glob(pattern): shutil.copytree(directory,notices/directory.name,dirs_exist_ok=True)
+    shutil.copytree(ROOT/'docs/licenses',notices/'licenses',dirs_exist_ok=True)
+    python_license=build_env/('LICENSE.txt' if os.name=='nt' else 'lib/python'+str(sys.version_info.major)+'.'+str(sys.version_info.minor)+'/LICENSE.txt')
+    if not python_license.exists(): python_license=Path(sys.base_prefix)/'LICENSE.txt'
+    if python_license.exists(): shutil.copy2(python_license,notices/'PYTHON-LICENSE.txt')
     label={'Windows':'windows','Linux':'linux','Darwin':'macos'}[platform.system()]+'-'+platform.machine().lower()
     metadata=dict(platform=platform.platform(),python=sys.version,headless_export_soak_smoke=True,
                   source_sha256={str(p.relative_to(ROOT)).replace('\\','/'):hashlib.sha256(p.read_bytes().replace(b'\r\n',b'\n')).hexdigest()

@@ -1,0 +1,1 @@
+Build OK: 14 Python modules; pinned Pygame desktop runtime ready. Headless uses only stdlib.

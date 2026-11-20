@@ -45,3 +45,11 @@
   executable FFmpeg trong gói game. Không dùng footage hoặc âm thanh bên ngoài.
 - Sprite Bóng Mực LOD, clipping, UI/leaderboard và phụ đề do mã trong repo sinh.
   Video ghi cửa sổ app, phím tự động đã công bố; không dùng model ảnh/video AI.
+- Bản nguồn dùng font hệ điều hành. Bản standalone còn có font dự phòng
+  freesansbold.ttf đi kèm Pygame (Copyright2002 Free Software Foundation,
+  metadata ghi GNU GPL); tệp font là asset của bên thứ ba, không thuộc MIT
+  của mã game. Nguồn: https://github.com/pygame/pygame/tree/2.6.1/src_py.
+- Bản sao LGPL2.1 và license dependency lấy nguyên từ tag chính thức
+  https://github.com/pygame/pygame/tree/2.6.1/docs/licenses, kèm GPL2 từ GNU,
+  ở docs/licenses/pygame-2.6.1 và ZIP/THIRD-PARTY/licenses. Một số notice giữ
+  cho đầy đủ bản phân phối Pygame dù game không dùng tính năng tương ứng.

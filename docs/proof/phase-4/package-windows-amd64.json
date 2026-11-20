@@ -1,0 +1,25 @@
+{
+  "platform": "Windows-10-10.0.22631-SP0",
+  "python": "3.9.7 (tags/v3.9.7:1016ef3, Aug 30 2021, 20:19:38) [MSC v.1929 64 bit (AMD64)]",
+  "headless_export_soak_smoke": true,
+  "source_sha256": {
+    "game.py": "1655aedc3a017d353138db03ff9ec9772b6a35b53e1a90cba3fa1d111a674161",
+    "game.contract.json": "bef993b2f05fb6a554c32911fde935bb0bd2e1d8cdf33a56d88fc9698d1d9c54",
+    "src/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/lantern_island/__init__.py": "81164d1071f8c8afeafb9f4780bc9f3db2330a675077e1a2a4151a63b0ad1862",
+    "src/lantern_island/audio.py": "c5a1ce962ed14a9651922a621ec940af661833b0357a57b2052a68a0f90a4cc9",
+    "src/lantern_island/campaign.py": "936d0c340e84b49559357e851816dc6f5a7be318102ef2688920906624a34caf",
+    "src/lantern_island/leaderboard.py": "68c835e1b82bb5b55810df30604a7a96aa4500948784ed52b36a77840fc7dd13",
+    "src/lantern_island/maps.py": "e6a703d5914f5176d4d9bf847d6d7268aac0cb7ef294ccae62ff0fa937fcca20",
+    "src/lantern_island/model.py": "0267f50799ff6b033bbd6daa11167920c5fa1cf4aebc78320c1dc57708c056a4",
+    "src/lantern_island/performance.py": "d1821162548c45bde65970c2bacaffedfc8bd5a341f5c1ed0a6d425e7c0fbbf8",
+    "src/lantern_island/pygame_canvas.py": "fb1b5441c20053631ae87c4c437c2db47ebb1c9bafd09e5528090666b2ab376b",
+    "src/lantern_island/render.py": "cd14b936e576dcc3d0c6d41bff1e56873f18edacb4dfb98593c04957906b69d9",
+    "src/lantern_island/storage.py": "ce8656a9d1ab2ca171c6fe053bb701487ba71ab9d3361c085adef56333506038",
+    "src/lantern_island/validation.py": "cbfcf974570a28d4f7834b3700af94fffcce2867a0c78d548d732084fb03be60",
+    "src/lantern_island/view.py": "3ec7e2dfb8e17211e1b47ac72855319a6ef41b254d1835489e1cc76310689ca7"
+  },
+  "archive": "DaoDenLong-v1.0.0-windows-amd64.zip",
+  "sha256": "acc0bb8091cd6887d8f4c8b302fa0c2219f8cee1eacf58f301aa4bb740ea59b6",
+  "bytes": 11595740
+}

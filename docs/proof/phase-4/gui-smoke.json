@@ -1,0 +1,50 @@
+{
+  "generated_at_utc": "2026-11-20T10:24:57.586086+00:00",
+  "platform": "Windows-10-10.0.22631-SP0",
+  "python": "3.9.7 (tags/v3.9.7:1016ef3, Aug 30 2021, 20:19:38) [MSC v.1929 64 bit (AMD64)]",
+  "pygame": "2.6.1",
+  "display_driver": "windows",
+  "resolution": [
+    1280,
+    720
+  ],
+  "checks": [
+    "real desktop flow: menu, intro, movement, jump, dash",
+    "pause freezes sim; settings persist; sensitivity changes mouse yaw",
+    "loss/dawn score entry, won-only totals, durable board, rebind conflict/input/reset, saved reduced-motion and large text >=22px",
+    "original PCM music and every required SFX routed to initialized dummy mixer",
+    "HUD near-E prompt, red30s timer, offscreen lantern arrow and ambient endpoints",
+    "v1.2 persisted accessible palette, white warning+icon, unchanged model, capacity16, low-fuel1Hz frames, deflated/torn unlit lamp and refuel restoration",
+    "visual spawn subtitles+edge arrows, wind prewarning, last10seconds and low-fuel indicators; all fonts>=18px"
+  ],
+  "runs": [
+    {
+      "night": 1,
+      "frames": 120,
+      "wall_seconds": 0.6765022,
+      "average_fps": 177.3830151624045,
+      "sim_tick": 840,
+      "state": "playing",
+      "shades": 3
+    },
+    {
+      "night": 2,
+      "frames": 120,
+      "wall_seconds": 0.9580279999999999,
+      "average_fps": 125.25729936912074,
+      "sim_tick": 840,
+      "state": "playing",
+      "shades": 3
+    },
+    {
+      "night": 3,
+      "frames": 120,
+      "wall_seconds": 1.1572973999999996,
+      "average_fps": 103.68985534746733,
+      "sim_tick": 840,
+      "state": "playing",
+      "shades": 3
+    }
+  ],
+  "limitations": "Programmatic real framebuffer/flow test. FPS fixture has long invulnerability to prevent early death; standard map/spawns/rules unchanged. Dummy audio tests PCM/mixer routing, not human hearing. FPS includes logic/draw/flip/event pump, no limiter."
+}

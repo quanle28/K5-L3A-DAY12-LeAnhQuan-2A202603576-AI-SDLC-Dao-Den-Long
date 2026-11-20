@@ -1,0 +1,21 @@
+{
+  "ffmpeg_version": "7.1-essentials_build-www.gyan.dev built with gcc 14.2.0 (Rev1, Built by MSYS2 project)",
+  "codec": "h264",
+  "pix_fmt": "yuv420p(progressive)",
+  "fps": 30.0,
+  "source_size": [
+    1280,
+    720
+  ],
+  "size": [
+    1280,
+    720
+  ],
+  "rotate": 0,
+  "duration": 72.0,
+  "wall_seconds": 72.7417023,
+  "frames": 2160,
+  "automated_input": true,
+  "audio": "silent; captions; dummy audio not a listening test",
+  "limitations": "Live window framebuffer with scripted keys, declared controlled fixture and direct map previews; actual captured command output. Not a human playtest or a full three-Night victory."
+}

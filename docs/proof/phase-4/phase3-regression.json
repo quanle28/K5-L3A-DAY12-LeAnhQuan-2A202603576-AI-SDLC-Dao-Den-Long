@@ -1,0 +1,145 @@
+{
+  "baseline_tag": "phase-3",
+  "cases": [
+    {
+      "name": "deposit",
+      "identical": true,
+      "sha256": "7229ba344deef55229c9dd4fded18ba9018182e65723d004ef4ec4e41dfb2754"
+    },
+    {
+      "name": "dash",
+      "identical": true,
+      "sha256": "92c323ea9eb26a8fdfd37f2f32e6a433502d9298226062ca6ea5ba61e59a8072"
+    },
+    {
+      "name": "fall",
+      "identical": true,
+      "sha256": "59bb0f16367166b3ccb2e759abc1b78acfab2125f5811b648571a8ba56b1b1c3"
+    },
+    {
+      "name": "pause",
+      "identical": true,
+      "sha256": "419e74c8a69e99b333f9093a8c1251b5c0ee06cca9942dfbbfdf6a4097ad965a"
+    },
+    {
+      "name": "pulse",
+      "identical": true,
+      "sha256": "5e639a57cb5166a3ce292e2cd8ba28997b33456529de97383032ece97e355264"
+    },
+    {
+      "name": "drifter-steal",
+      "identical": true,
+      "sha256": "f4794bdd2864bdeeb6a5d239d30e940d9c4e116c6dba5b9a33f497d2f6440d9e"
+    },
+    {
+      "name": "drifter-drop",
+      "identical": true,
+      "sha256": "39e77659179102e0beae45453f5fabaf0e7641c36187735a127abf1ef9b023aa"
+    },
+    {
+      "name": "charm",
+      "identical": true,
+      "sha256": "098ab9cbed6ebc3f6104f4a5ffd4f6db99a551e9942f9d4c6e48ae38e8a998b8"
+    },
+    {
+      "name": "launch",
+      "identical": true,
+      "sha256": "c988a209d28baddf69cfcc748535b1f15a448a25acdbc0557747b07f617a8262"
+    },
+    {
+      "name": "tiers",
+      "identical": true,
+      "sha256": "1e8f92d0f2c18e434dede377433812ed007a311464b1e7156397cbaea2f77168"
+    },
+    {
+      "name": "wind",
+      "identical": true,
+      "sha256": "a6c7ea6ff9faeb4aac03c4aefaccc457892aeb773628bfd15fe1c30ad47e04b7"
+    },
+    {
+      "name": "fuel-out",
+      "identical": true,
+      "sha256": "d4bbae43a66e00b9f7f72f418697a83ebb9dffe5206e0fe16d5599ff27acf8a9"
+    },
+    {
+      "name": "refuel",
+      "identical": true,
+      "sha256": "118166c5cde61be5d1d24318fccc8f6f2a00e35e65c13fb541afc51170b86d8f"
+    },
+    {
+      "name": "relight",
+      "identical": true,
+      "sha256": "172aa9224ec0297e70287ecfb0737882a56620cad4af2e114eb3d2d262e70b9f"
+    },
+    {
+      "name": "capacity",
+      "identical": true,
+      "sha256": "d6fbb9c56bd2b091547b3701625e5d9099f5e82f0d059529f736e83a3cc79c9a"
+    },
+    {
+      "name": "drain-stack",
+      "identical": true,
+      "sha256": "5bb1f0ee7748932bf9c5baf4e0f20ae539d4a2c14049e76c1b2d590d4b0aa521"
+    },
+    {
+      "name": "drain-pause",
+      "identical": true,
+      "sha256": "84c58e3de1a9b4047342874452ef297b60d3658f5440f8a89ac0789fea9a931f"
+    },
+    {
+      "name": "drain-pulse",
+      "identical": true,
+      "sha256": "30d38bde1c8b8078092f092d7f87992e96a26b573e30ecbbb88102e3d47ae49c"
+    },
+    {
+      "name": "refuel-eject",
+      "identical": true,
+      "sha256": "85e46e3638490bf2a37d2137aa08ac4bc05ebd81fef27070ebd5e45f62935fe5"
+    },
+    {
+      "name": "all-lit-running",
+      "identical": true,
+      "sha256": "d2bd6c6ade75c80231a3d4c65495125e33ac32ffee09e533f90f148e5bccf83b"
+    },
+    {
+      "name": "dawn-won-night1",
+      "identical": true,
+      "sha256": "c5d221776fb77414de99e7f345e614c1a680cf7836af40de719fc7d438a9f3f5"
+    },
+    {
+      "name": "dawn-lost-night1",
+      "identical": true,
+      "sha256": "7f229626e166c9cdf20fdfa2a33e24a0024c84e9a9df3ae44ac6c978e30eca2c"
+    },
+    {
+      "name": "dawn-won-night2",
+      "identical": true,
+      "sha256": "07e165b000840bee31b8cbaa38ff85758d9bf728fe26ea3c6fd070cfecf045a2"
+    },
+    {
+      "name": "dawn-lost-night2",
+      "identical": true,
+      "sha256": "70c0582b9bd4a2fdb50cbefc316514fc0b20b0b8bc637d251a7902def61c05b4"
+    },
+    {
+      "name": "dawn-won-night3",
+      "identical": true,
+      "sha256": "13e3380071e4a5d3b544b7fbfede91da0071abad6f8e3150c96147d8b692a538"
+    },
+    {
+      "name": "dawn-lost-night3",
+      "identical": true,
+      "sha256": "0abe8411950efb290d54feefb97e62b43062a2d45efb32129c53f664daa1a961"
+    },
+    {
+      "name": "dawn-expiry",
+      "identical": true,
+      "sha256": "5a319c98ff581a9d76e002fdf4444fe8232b0b85b7e3af363d58c5092fc5361c"
+    },
+    {
+      "name": "dawn-relight",
+      "identical": true,
+      "sha256": "aedec7d737900f788b8144e5204be1eed4baa6345a68027bd407465147955e9b"
+    }
+  ]
+}

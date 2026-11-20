@@ -1,0 +1,14 @@
+{
+  "seed": 12,
+  "scenario": "tests/scenarios/v12/maintenance.json",
+  "end": {
+    "type": "end",
+    "ticks": 7200,
+    "state": "won",
+    "score": 580
+  },
+  "flames": 3,
+  "lit": 3,
+  "method": "Controlled120s maintenance challenge with declared prelit lamps/motes. Bot sends legal move/interact only; no runtime mutations. CLI replay matches.",
+  "limitations": "Not an untouched default-map playthrough or human play recording; Phase2 early-win bot is superseded by the dawn objective."
+}

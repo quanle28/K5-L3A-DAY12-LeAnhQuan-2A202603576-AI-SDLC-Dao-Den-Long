@@ -1,0 +1,75 @@
+158 INFO: PyInstaller: 6.11.1, contrib hooks: 2024.11
+158 INFO: Python: 3.9.7
+168 INFO: Platform: Windows-10-10.0.22631-SP0
+168 INFO: Python environment: D:\K5-L3A-DAY12-LeAnhQuan-2A202603576-AI-SDLC-Dao-Den-Long\.buildenv
+169 INFO: wrote D:\K5-L3A-DAY12-LeAnhQuan-2A202603576-AI-SDLC-Dao-Den-Long\DaoDenLong.spec
+172 INFO: Removing temporary files and cleaning cache in C:\Users\Le Anh Quan\AppData\Local\pyinstaller
+179 INFO: Module search paths (PYTHONPATH):
+['C:\\Program Files\\Python39\\python39.zip',
+ 'C:\\Program Files\\Python39\\DLLs',
+ 'C:\\Program Files\\Python39\\lib',
+ 'C:\\Program Files\\Python39',
+ 'D:\\K5-L3A-DAY12-LeAnhQuan-2A202603576-AI-SDLC-Dao-Den-Long\\.buildenv',
+ 'D:\\K5-L3A-DAY12-LeAnhQuan-2A202603576-AI-SDLC-Dao-Den-Long\\.buildenv\\lib\\site-packages',
+ 'D:\\K5-L3A-DAY12-LeAnhQuan-2A202603576-AI-SDLC-Dao-Den-Long',
+ 'D:\\K5-L3A-DAY12-LeAnhQuan-2A202603576-AI-SDLC-Dao-Den-Long\\.runtime']
+pygame 2.6.1 (SDL 2.28.4, Python 3.9.7)
+Hello from the pygame community. https://www.pygame.org/contribute.html
+609 INFO: Appending 'datas' from .spec
+610 INFO: checking Analysis
+610 INFO: Building Analysis because Analysis-00.toc is non existent
+610 INFO: Running Analysis Analysis-00.toc
+610 INFO: Target bytecode optimization level: 0
+610 INFO: Initializing module dependency graph...
+612 INFO: Initializing module graph hook caches...
+623 INFO: Analyzing base_library.zip ...
+1403 INFO: Processing standard module hook 'hook-encodings.py' from 'D:\\K5-L3A-DAY12-LeAnhQuan-2A202603576-AI-SDLC-Dao-Den-Long\\.buildenv\\lib\\site-packages\\PyInstaller\\hooks'
+2472 INFO: Processing standard module hook 'hook-pickle.py' from 'D:\\K5-L3A-DAY12-LeAnhQuan-2A202603576-AI-SDLC-Dao-Den-Long\\.buildenv\\lib\\site-packages\\PyInstaller\\hooks'
+3013 INFO: Processing standard module hook 'hook-heapq.py' from 'D:\\K5-L3A-DAY12-LeAnhQuan-2A202603576-AI-SDLC-Dao-Den-Long\\.buildenv\\lib\\site-packages\\PyInstaller\\hooks'
+3241 INFO: Caching module dependency graph...
+3332 INFO: Looking for Python shared library...
+3341 INFO: Using Python shared library: C:\Program Files\Python39\python39.dll
+3342 INFO: Analyzing D:\K5-L3A-DAY12-LeAnhQuan-2A202603576-AI-SDLC-Dao-Den-Long\game.py
+3427 INFO: Processing standard module hook 'hook-platform.py' from 'D:\\K5-L3A-DAY12-LeAnhQuan-2A202603576-AI-SDLC-Dao-Den-Long\\.buildenv\\lib\\site-packages\\PyInstaller\\hooks'
+3455 INFO: Processing standard module hook 'hook-psutil.py' from 'D:\\K5-L3A-DAY12-LeAnhQuan-2A202603576-AI-SDLC-Dao-Den-Long\\.buildenv\\lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+3640 INFO: Processing standard module hook 'hook-pygame.py' from 'D:\\K5-L3A-DAY12-LeAnhQuan-2A202603576-AI-SDLC-Dao-Den-Long\\.buildenv\\lib\\site-packages\\pygame\\__pyinstaller'
+3839 INFO: Processing module hooks (post-graph stage)...
+3844 INFO: Performing binary vs. data reclassification (20 entries)
+3872 INFO: Looking for ctypes DLLs
+3876 INFO: Analyzing run-time hooks ...
+3877 INFO: Including run-time hook 'pyi_rth_inspect.py' from 'D:\\K5-L3A-DAY12-LeAnhQuan-2A202603576-AI-SDLC-Dao-Den-Long\\.buildenv\\lib\\site-packages\\PyInstaller\\hooks\\rthooks'
+3882 INFO: Looking for dynamic libraries
+pygame 2.6.1 (SDL 2.28.4, Python 3.9.7)
+Hello from the pygame community. https://www.pygame.org/contribute.html
+4216 INFO: Extra DLL search directories (AddDllDirectory): ['D:\\K5-L3A-DAY12-LeAnhQuan-2A202603576-AI-SDLC-Dao-Den-Long\\.buildenv\\lib\\site-packages\\pygame']
+4216 INFO: Extra DLL search directories (PATH): []
+4898 INFO: Warnings written to D:\K5-L3A-DAY12-LeAnhQuan-2A202603576-AI-SDLC-Dao-Den-Long\build\DaoDenLong\warn-DaoDenLong.txt
+4917 INFO: Graph cross-reference written to D:\K5-L3A-DAY12-LeAnhQuan-2A202603576-AI-SDLC-Dao-Den-Long\build\DaoDenLong\xref-DaoDenLong.html
+4939 INFO: checking PYZ
+4939 INFO: Building PYZ because PYZ-00.toc is non existent
+4939 INFO: Building PYZ (ZlibArchive) D:\K5-L3A-DAY12-LeAnhQuan-2A202603576-AI-SDLC-Dao-Den-Long\build\DaoDenLong\PYZ-00.pyz
+5165 INFO: Building PYZ (ZlibArchive) D:\K5-L3A-DAY12-LeAnhQuan-2A202603576-AI-SDLC-Dao-Den-Long\build\DaoDenLong\PYZ-00.pyz completed successfully.
+5180 INFO: checking PKG
+5180 INFO: Building PKG because PKG-00.toc is non existent
+5180 INFO: Building PKG (CArchive) DaoDenLong.pkg
+5198 INFO: Building PKG (CArchive) DaoDenLong.pkg completed successfully.
+5198 INFO: Bootloader D:\K5-L3A-DAY12-LeAnhQuan-2A202603576-AI-SDLC-Dao-Den-Long\.buildenv\lib\site-packages\PyInstaller\bootloader\Windows-64bit-intel\run.exe
+5198 INFO: checking EXE
+5198 INFO: Building EXE because EXE-00.toc is non existent
+5198 INFO: Building EXE from EXE-00.toc
+5198 INFO: Copying bootloader EXE to D:\K5-L3A-DAY12-LeAnhQuan-2A202603576-AI-SDLC-Dao-Den-Long\build\DaoDenLong\DaoDenLong.exe
+5252 INFO: Copying icon to EXE
+5305 INFO: Copying 0 resources to EXE
+5305 INFO: Embedding manifest in EXE
+5348 INFO: Appending PKG archive to EXE
+5391 INFO: Fixing EXE headers
+5619 INFO: Building EXE from EXE-00.toc completed successfully.
+5622 INFO: checking COLLECT
+5622 INFO: Building COLLECT because COLLECT-00.toc is non existent
+5622 INFO: Removing dir D:\K5-L3A-DAY12-LeAnhQuan-2A202603576-AI-SDLC-Dao-Den-Long\dist\DaoDenLong
+5652 INFO: Building COLLECT COLLECT-00.toc
+5875 INFO: Building COLLECT COLLECT-00.toc completed successfully.
+pygame 2.6.1 (SDL 2.28.4, Python 3.9.7)
+Hello from the pygame community. https://www.pygame.org/contribute.html
+{"nights": 3, "crashes": 0, "results": ["lost", "lost", "lost"], "mem_start_mb": 18.5625, "mem_end_mb": 18.6289, "duration_s": 0.4533, "pid": 32652, "seed": 7, "seeds": [7, 8, 9], "night_order": [1, 2, 3], "sim_ticks": [3097, 1214, 2146], "rss_method": "psutil current RSS /1024� after first load and after final reset+gc; same PID", "errors": []}
+PACKAGED AND SMOKE-TESTED: D:\K5-L3A-DAY12-LeAnhQuan-2A202603576-AI-SDLC-Dao-Den-Long\dist\DaoDenLong-v1.0.0-windows-amd64.zip

@@ -1,0 +1,115 @@
+{
+  "contract_version": "1.3",
+  "local_gate": "passed",
+  "unit_tests": 96,
+  "deterministic_scenarios": 28,
+  "phase3_byte_regressions": 28,
+  "benchmark": {
+    "contract_version": "1.3",
+    "avg_fps": 123.0739,
+    "p1_low_fps": 58.2392,
+    "frame_ms_p95": 10.8581,
+    "frames": 3692,
+    "load_ms": 307.169,
+    "peak_mem_mb": 53.781,
+    "vsync_off": true,
+    "renderer": "Pygame 2.6.1 / SDL 2.28.4 software perspective; shared mesh/sprite LOD renderer",
+    "os": "Windows-10-10.0.22631-SP0",
+    "seed": 42,
+    "duration_s": 30.0,
+    "warmup_s": 3,
+    "resolution": [
+      1280,
+      720
+    ],
+    "windowed": true,
+    "scene": {
+      "night": 1,
+      "shades": 200,
+      "motes": 100,
+      "lit": 3,
+      "player": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "fuel": [
+        100.0,
+        100.0,
+        100.0
+      ],
+      "spawn": false,
+      "damage": false,
+      "pickup": false,
+      "fuel_decay": false,
+      "terminal": false,
+      "creativity": false
+    },
+    "camera": "R30,Y15,lookat origin; +X start; XZ CCW; 15 seconds/revolution",
+    "rss_method": "psutil current RSS sampled each measured frame; MiB",
+    "p95_method": "linear interpolation (type7)",
+    "measurement_wall_s": 30.0,
+    "overshoot_ms": 10.357
+  },
+  "soak": {
+    "nights": 10,
+    "crashes": 0,
+    "results": [
+      "lost",
+      "lost",
+      "lost",
+      "lost",
+      "lost",
+      "lost",
+      "lost",
+      "lost",
+      "lost",
+      "lost"
+    ],
+    "mem_start_mb": 16.2734,
+    "mem_end_mb": 16.3438,
+    "duration_s": 1.7181,
+    "pid": 6612,
+    "seed": 7,
+    "seeds": [
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16
+    ],
+    "night_order": [
+      1,
+      2,
+      3,
+      1,
+      2,
+      3,
+      1,
+      2,
+      3,
+      1
+    ],
+    "sim_ticks": [
+      3097,
+      1214,
+      2146,
+      4496,
+      4334,
+      1315,
+      974,
+      2342,
+      3126,
+      2292
+    ],
+    "rss_method": "psutil current RSS /1024² after first load and after final reset+gc; same PID",
+    "errors": []
+  },
+  "video_sha256": "241a9c711b9e4773334c00410290780ce095b11de7085bfe68ff36931034985c",
+  "limitations": "Local release gate; instructor hardware/hidden tests/human play and listening are not certified."
+}

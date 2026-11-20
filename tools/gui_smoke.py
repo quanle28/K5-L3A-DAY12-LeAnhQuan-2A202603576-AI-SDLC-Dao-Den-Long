@@ -25,7 +25,7 @@ def main():
     parser.add_argument('--require-fps',type=float,default=30)
     args=parser.parse_args()
     if args.frames<1: parser.error('frames must be positive')
-    target=Path(os.environ.get('LANTERN_PROOF_DIR',str(ROOT/'docs/proof/phase-3')))
+    target=Path(os.environ.get('LANTERN_PROOF_DIR',str(ROOT/'docs/proof/phase-4')))
     target.mkdir(parents=True,exist_ok=True)
     checks=[]; runs=[]
     with tempfile.TemporaryDirectory() as temp:
@@ -53,7 +53,9 @@ def main():
             old=app.yaw; app.handle_event(event); assert abs(app.yaw-old-6.5)<1e-6
             checks.append('pause freezes sim; settings persist; sensitivity changes mouse yaw')
             app.start_night(2,playing=True); app.game=Game(12,{'player':{'flames':0}},2)
-            app.step_once(); assert app.screen=='result' and app.campaign.total==0
+            app.step_once(); assert app.screen=='score-entry' and app.campaign.total==0
+            app.name_text='Quan_Test'; app.act('submit-score'); assert app.screen=='result'
+            assert app.board.entries()[0]['score']==0
             app.act('retry'); assert app.game.night==2 and app.game.flames==3 and app.game.score==0
             app.campaign.scores={}
             for night in (1,2,3):
@@ -65,7 +67,24 @@ def main():
                 assert app.screen==('dawn' if night==3 else 'intro')
             assert app.campaign.total>0
             app.draw(); pg.display.flip(); pg.image.save(app.surface,str(target/'dawn.png'))
-            checks.append('loss/retry, all three result/next transitions, dawn and won-only totals')
+            app.act('score'); app.name_text='Dawn_Test'; app.act('submit-score')
+            assert app.screen=='leaderboard' and app.board_entries[0]['nights_won']==3
+            assert app.board_entries[0]['score']==app.campaign.total
+            app.draw(); pg.image.save(app.surface,str(target/'leaderboard.png'))
+            app.act('settings'); app.act('reduced_motion'); app.act('large_text'); app.draw()
+            assert min(app.canvas.rendered_font_sizes)>=22
+            pg.image.save(app.surface,str(target/'settings-large.png'))
+            app.act('bindings'); app.act('bind:jump')
+            app.handle_event(pg.event.Event(pg.KEYDOWN,key=pg.K_w))
+            assert app.pending_binding=='jump' and 'đang dùng' in app.binding_message
+            app.handle_event(pg.event.Event(pg.KEYDOWN,key=pg.K_u))
+            assert app.settings.bindings['jump']==['u']
+            app.keys={pg.K_u}; assert app.controls()['jump']; app.keys.clear()
+            app.draw(); pg.image.save(app.surface,str(target/'bindings-large.png'))
+            app.act('bindings-default'); assert app.settings.bindings['jump']==['space']
+            saved=Settings(settings_path); assert saved.reduced_motion and saved.large_text
+            app.act('large_text'); app.act('reduced_motion'); app.act('bindings-back'); app.act('back')
+            checks.append('loss/dawn score entry, won-only totals, durable board, rebind conflict/input/reset, saved reduced-motion and large text >=22px')
             assert app.audio and app.audio.available
             for name in ('mote_picked','lantern_lit','pulse','player_hit','jump','dash','won','lost','shade_spawned','countdown','wind'):
                 app.audio.play(name)
@@ -108,6 +127,22 @@ def main():
             pg.image.save(app.surface,str(target/'refueled.png'))
             app.act('colorblind')
             checks.append('v1.2 persisted accessible palette, white warning+icon, unchanged model, capacity16, low-fuel1Hz frames, deflated/torn unlit lamp and refuel restoration')
+            app.start_night(1,playing=True)
+            for _ in range(300): app.step_once(dict(DEFAULT_INPUT))
+            assert len(app.notices)==2
+            app.canvas.text_cache.clear(); app.draw()
+            assert any('Bóng Mực xuất hiện' in key[1] for key in app.canvas.text_cache)
+            assert min(app.canvas.rendered_font_sizes)>=18
+            pg.image.save(app.surface,str(target/'shade-notice.png'))
+            app.start_night(3,playing=True); app.game.sim_tick=1680
+            app.canvas.text_cache.clear(); app.draw()
+            assert any('Gió sắp thổi' in key[1] for key in app.canvas.text_cache)
+            pg.image.save(app.surface,str(target/'wind-notice.png'))
+            app.game=Game(12,{'time_left_s':10,'lanterns':[{'id':'L1','lit':True,'fuel':20}]},3)
+            app.canvas.text_cache.clear(); app.draw()
+            assert any('Còn 10 giây' in key[1] for key in app.canvas.text_cache)
+            assert any('Đèn dầu dưới' in key[1] for key in app.canvas.text_cache)
+            checks.append('visual spawn subtitles+edge arrows, wind prewarning, last10seconds and low-fuel indicators; all fonts>=18px')
             app.campaign.scores={}
             for night in (1,2,3):
                 app.start_night(night,playing=True)

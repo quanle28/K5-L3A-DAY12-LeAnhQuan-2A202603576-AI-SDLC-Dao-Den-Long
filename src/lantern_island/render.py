@@ -82,8 +82,18 @@ class Scene:
 
     def flush_faces(self):
         for _,points,color in sorted(self.faces,key=lambda f:f[0],reverse=True):
-            self.canvas.create_polygon(*[v for p in points for v in p],fill=color,outline=color)
+            if isinstance(color,tuple) and color[0]=='sprite':
+                self.canvas.create_sprite(color[1],*points,**color[2])
+            else: self.canvas.create_polygon(*[v for p in points for v in p],fill=color,outline=color)
         self.faces=[]
+
+    def shade_sprite(self,pos,body,outline):
+        depth=self.camera_point(pos)[2]; point=self.project(pos)
+        if point is None: return
+        width=max(2,round(self.f*1.65/depth)); height=max(3,round(self.f*2.15/depth))
+        x,y=point
+        if x+width/2<0 or x-width/2>self.w or y+height/2<0 or y-height/2>self.h: return
+        self.faces.append((depth,(x,y,width,height),('sprite','shade',dict(body=body,outline=outline))))
 
     def ring_surface(self,inner,outer,y,half=False,color=None):
         color=color or PALETTE['grass']
@@ -95,20 +105,26 @@ class Scene:
                (outer*math.cos(b),y,outer*math.sin(b)),(inner*math.cos(b),y,inner*math.sin(b))]
             self.polygon(p,color)
 
-    def draw(self,game,yaw,w,h,message='',paused=False,started=True,total_score=0,colorblind=False):
+    def draw(self,game,yaw,w,h,message='',paused=False,started=True,total_score=0,colorblind=False,camera=None,benchmark=False,reduce_motion=False,notices=None,controls_hint=None,interaction_key='E'):
         self.w,self.h,self.f=w,h,min(w,h)*.98
         self.sy,self.cy=math.sin(math.radians(yaw)),math.cos(math.radians(yaw))
         self.sp,self.cp=math.sin(.48),math.cos(.48)
         self.eye=[game.pos[0]-self.sy*13,game.pos[1]+8,game.pos[2]-self.cy*13]
+        if camera:
+            self.eye,target=camera
+            dx,dz=target[0]-self.eye[0],target[2]-self.eye[2]; horizontal=math.hypot(dx,dz)
+            vertical=self.eye[1]-target[1]; length=math.hypot(horizontal,vertical)
+            self.sy,self.cy=dx/horizontal,dz/horizontal; self.sp,self.cp=vertical/length,horizontal/length
+        self.reduce_motion=reduce_motion; self.notices=notices or []; self.controls_hint=controls_hint; self.interaction_key=interaction_key
         c=self.canvas; p=dict(PALETTE); self.colorblind=colorblind
         if colorblind: p.update(outline='#00B3FF',danger='#FFFFFF')
         self.palette=p
         c.delete('all')
         c.create_rectangle(0,0,w,h,fill=p['sky'],outline='')
-        for i in range(35):
+        for i in range(0 if benchmark else 35):
             x=(i*173+23)%int(w); y=(i*47+31)%max(1,int(h*.35))
             c.create_oval(x,y,x+2,y+2,fill=p['core'],outline='')
-        c.create_oval(w*.78,h*.1,w*.78+48,h*.1+48,fill=p['core'],outline='')
+        if not benchmark: c.create_oval(w*.78,h*.1,w*.78+48,h*.1+48,fill=p['core'],outline='')
         for i in range(6):
             c.create_oval(i*w/5-100,h*.48,w*i/5+250,h*.8,fill=p['fog'],outline='')
         c.create_rectangle(0,h*.7,w,h,fill=p['cloud'],outline='')
@@ -162,10 +178,13 @@ class Scene:
             if bright: self.spark((x,y+3,z),.24,p['core'])
             self.cone((x,y+4,z),1,.4,p['red'])
         for m in game.motes:
-            x,y,z=m['pos']; y+=.6+.13*math.sin(game.sim_tick*.06+x)
+            x,y,z=m['pos']; y+=.6+(0 if reduce_motion else .13*math.sin(game.sim_tick*.06+x))
             self.spark((x,y,z),.22,p['halo']); self.spark((x,y,z),.11,p['mote'])
         for s in game.shades:
             x,y,z=s['pos']; color=p['stunned'] if s['state']=='stunned' else p['shade']
+            # Shared gameplay/benchmark LOD: every distant shade is rendered, never removed.
+            if hasattr(c,'create_sprite') and math.dist(self.eye,s['pos'])>8:
+                self.shade_sprite(s['pos'],color,p['outline']); continue
             self.jewel((x,y,z),.75,color); self.cone((x,y-.15,z),.77,.08,p['outline'])
             self.spark((x-.22,y+.1,z-.55),.06,p['outline']); self.spark((x+.22,y+.1,z-.55),.06,p['outline'])
         for d in game.drifters:
@@ -184,13 +203,13 @@ class Scene:
         if game.last_pulse:
             tick,origin=game.last_pulse; age=game.sim_tick-tick
             if age<30:
-                coords=[]; radius=5*min(1,(age+1)/15)
+                coords=[]; radius=5 if reduce_motion else 5*min(1,(age+1)/15)
                 for i in range(49):
                     a=i*math.tau/48
                     q=self.project([origin[0]+radius*math.cos(a),origin[1]+.8,origin[2]+radius*math.sin(a)])
                     if q: coords.extend(q)
                 if len(coords)>3: c.create_line(*coords,fill=p['core'],width=2)
-        if self.wind_warning(game):
+        if self.wind_warning(game) and not reduce_motion and not benchmark:
             for i in range(12):
                 xx=(i*113+game.sim_tick*4)%w; yy=130+(i*53)%int(h*.5)
                 c.create_polygon(xx,yy,xx+13,yy-5,xx+20,yy+3,xx+5,yy+5,fill=p['gold'])
@@ -216,22 +235,24 @@ class Scene:
 
     def hud(self,g,w,h,message,total_score):
         c=self.canvas; p=self.palette; lit=sum(l['lit'] for l in g.lanterns)
-        c.create_rectangle(16,16,250,104,fill=p['fog'],outline=p['gold'])
-        c.create_text(30,39,anchor='w',text='NGỌN LỬA  '+'♥ '*g.flames,fill=p['lamp'],font=('Segoe UI',14,'bold'))
-        c.create_text(30,73,anchor='w',text='Đêm %d · %s'%(g.night,g.world.names[g.night]),fill=p['text'],font=('Segoe UI',11))
-        c.create_rectangle(w/2-90,16,w/2+90,80,fill=p['fog'],outline=p['gold'])
+        c.create_rectangle(16,16,306,112,fill=p['fog'],outline=p['gold'])
+        c.create_text(30,40,anchor='w',text='NGỌN LỬA  '+'♥ '*g.flames,fill=p['lamp'],font=('Segoe UI',14,'bold'))
+        c.create_text(30,78,anchor='w',text='Đêm %d · %s'%(g.night,g.world.names[g.night]),fill=p['text'],font=('Segoe UI',11))
+        c.create_rectangle(w/2-118,16,w/2+118,96,fill=p['fog'],outline=p['gold'])
         seconds=max(0,math.ceil(g.time_left)); danger=seconds<=30
         clock_text=('⚠ ' if danger and self.colorblind else '')+'%02d:%02d'%(seconds//60,seconds%60)
         c.create_text(w/2,40,text=clock_text,fill=p['danger'] if danger and g.tick%30<15 else p['text'],font=('Segoe UI',25,'bold'))
-        c.create_rectangle(w-255,16,w-16,104,fill=p['fog'],outline=p['gold'])
-        c.create_text(w-135,40,text='ĐÈN %d/%d · CẦN %d'%(lit,len(g.lanterns),g.required_lights),fill=p['text'],font=('Segoe UI',12,'bold'))
-        c.create_text(w-135,75,text='Điểm %d · Tổng %d'%(g.score,total_score),fill=p['gold'],font=('Segoe UI',11))
+        c.create_text(w/2,78,text='TỚI BÌNH MINH',fill=p['text'],font=('Segoe UI',10))
+        c.create_rectangle(w-316,16,w-16,120,fill=p['fog'],outline=p['gold'])
+        c.create_text(w-166,38,text='ĐÈN %d/%d · CẦN %d'%(lit,len(g.lanterns),g.required_lights),fill=p['text'],font=('Segoe UI',12,'bold'))
+        c.create_text(w-166,70,text='Điểm %d'%g.score,fill=p['gold'],font=('Segoe UI',11))
+        c.create_text(w-166,101,text='Tổng %d'%total_score,fill=p['gold'],font=('Segoe UI',11))
         c.create_text(w/2,h-84,text='Đom đóm %d / %d · Giữ đèn sáng tới bình minh'%(g.carried,g.capacity),fill=p['text'],font=('Segoe UI',11))
         gap=300/g.capacity
         for i in range(g.capacity):
             xx=w/2-150+i*gap
             c.create_rectangle(xx,h-64,xx+gap-4,h-41,fill=p['mote'] if i<g.carried else p['fog'],outline=p['gold'])
-        c.create_text(w/2,h-23,text='WASD · SPACE nhảy · SHIFT lướt · F tỏa sáng · P / ESC tạm dừng',fill=p['text'],font=('Segoe UI',10))
+        c.create_text(w/2,h-23,text=self.controls_hint or 'WASD · SPACE nhảy · SHIFT lướt · E nạp · F tỏa sáng · P tạm dừng',fill=p['text'],font=('Segoe UI',10),width=w-30)
         c.create_text(w-110,h-63,text='Lướt %.1fs'%max(0,g.dash_cd_ticks/60),fill=p['gold'],font=('Segoe UI',11))
         c.create_text(w-110,h-39,text='Tỏa sáng %.1fs'%max(0,g.pulse_cd_ticks/60),fill=p['lamp'],font=('Segoe UI',11))
         # Actual cooldown icons, not just text: dash chevrons and an eight-ray pulse.
@@ -247,7 +268,7 @@ class Scene:
         nearby=[l for l in g.lanterns if g.accepts(l) and distance(g.pos,l['pos'])<=TUNING['interact_radius']]
         if nearby:
             near=min(nearby,key=lambda e:(distance(g.pos,e['pos']),e['id']))
-            prompt='E — Châm dầu (%.1f/100)'%g.fuel(near) if near['lit'] else 'E — Nạp ánh sáng (%d/%d)'%(near['deposited'],g.light_cost(near))
+            prompt=self.interaction_key+(' — Châm dầu (%.1f/100)'%g.fuel(near) if near['lit'] else ' — Nạp ánh sáng (%d/%d)'%(near['deposited'],g.light_cost(near)))
             c.create_text(w/2,h-125,text=prompt,fill=p['gold'],font=('Segoe UI',16,'bold'))
         unlit=[l for l in g.lanterns if not l['lit']]
         if unlit:
@@ -262,5 +283,26 @@ class Scene:
                     a=math.atan2(xx,forward); px=w/2+math.sin(a)*w*.37; py=h/2-math.cos(a)*h*.28
                     c.create_polygon(px+math.sin(a)*16,py-math.cos(a)*16,px+math.cos(a)*9,py+math.sin(a)*9,px-math.cos(a)*9,py-math.sin(a)*9,fill=p['gold'])
                     c.create_text(px,py+28,text=nearest['id']+' · %.0fm'%distance(g.pos,nearest['pos']),fill=p['gold'],font=('Segoe UI',10))
-        if message: c.create_text(w/2,105,text=message,fill=p['gold'],font=('Segoe UI',12,'bold'))
+        if message: c.create_text(w/2,145,text=message,fill=p['gold'],font=('Segoe UI',12,'bold'),width=w-50)
+        captions=[]
+        shade_notices=[n for n in self.notices if n.get('kind')=='shade']
+        if shade_notices:
+            captions.append('⚠ Bóng Mực xuất hiện — xem mũi tên ở mép màn hình')
+            for notice in shade_notices: self.edge_arrow(g,notice['pos'],w,h,'Bóng Mực',p['danger'])
+        if self.wind_warning(g): captions.append('⚠ Gió đang thổi' if g.wind['active'] else '⚠ Gió sắp thổi — chuẩn bị giữ thăng bằng')
+        if 0<seconds<=10: captions.append('⚠ Còn %d giây tới bình minh'%seconds)
+        weak=[l['id'] for l in g.lanterns if l['lit'] and not g.protected(l)]
+        if weak: captions.append('⚠ Đèn dầu dưới30: '+', '.join(weak)+' — cần châm dầu')
+        if captions:
+            c.create_rectangle(210,h-275,w-210,h-155,fill=p['fog'],outline=p['gold'])
+            c.create_text(w/2,h-215,text='\n'.join(captions),fill=p['text'],font=('Segoe UI',15),width=w-450)
+
+    def edge_arrow(self,g,target,w,h,label,color):
+        dx,dz=target[0]-g.pos[0],target[2]-g.pos[2]
+        right=dx*self.cy-dz*self.sy; forward=dx*self.sy+dz*self.cy
+        a=math.atan2(right,forward); vx,vy=math.sin(a),-math.cos(a)
+        scale=min((w/2-38)/max(1e-6,abs(vx)),(h/2-125)/max(1e-6,abs(vy)))
+        x,y=w/2+vx*scale,h/2+vy*scale
+        self.canvas.create_polygon(x+vx*14,y+vy*14,x-vx*8-vy*9,y-vy*8+vx*9,x-vx*8+vy*9,y-vy*8-vx*9,fill=color)
+        self.canvas.create_text(x-vx*65,y-vy*30,text=label,fill=color,font=('Segoe UI',11,'bold'))
 

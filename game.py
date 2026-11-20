@@ -1,6 +1,9 @@
-"""CLI entry point: Test Contract v1.2 and a shared-logic desktop game."""
+"""CLI entry point: Contract v1.3; gameplay protocol remains v1.2."""
+import time
+PROCESS_STARTED=time.perf_counter()
 import argparse
 import json
+import os
 import sys
 from pathlib import Path
 from src.lantern_island.model import DEFAULT_INPUT, Game, validate_inputs
@@ -39,8 +42,15 @@ def run_headless(game, frames, ticks, snapshot_every, stream):
 
 
 def main(argv=None):
-    parser = argparse.ArgumentParser(description="Đảo Đèn Lồng · Test Contract v1.2")
-    parser.add_argument("--headless", action="store_true")
+    parser = argparse.ArgumentParser(description="Đảo Đèn Lồng · Test Contract v1.3")
+    mode=parser.add_mutually_exclusive_group()
+    mode.add_argument("--headless", action="store_true")
+    mode.add_argument("--benchmark", action="store_true")
+    mode.add_argument("--soak", action="store_true")
+    mode.add_argument("--export-leaderboard",type=Path)
+    parser.add_argument('--data-dir',type=Path)
+    parser.add_argument('--duration',type=float,default=30)
+    parser.add_argument('--nights',type=int,default=10)
     parser.add_argument("--seed", type=int, default=12)
     parser.add_argument("--night", type=int, choices=[1,2,3], default=1)
     parser.add_argument("--scenario", type=Path)
@@ -49,6 +59,24 @@ def main(argv=None):
     parser.add_argument("--out", type=Path)
     parser.add_argument("--snapshot-every", type=int, default=10)
     args = parser.parse_args(argv)
+    if args.data_dir: os.environ['LANTERN_DATA_DIR']=str(args.data_dir.resolve())
+    if args.export_leaderboard:
+        try:
+            from src.lantern_island.leaderboard import Leaderboard
+            Leaderboard().export(args.export_leaderboard)
+            return 0
+        except (ValueError,OSError) as error:
+            print(str(error),file=sys.stderr); return 2
+    if args.benchmark or args.soak:
+        if args.out is None: parser.error('benchmark/soak requires --out')
+        try:
+            from src.lantern_island.performance import run_benchmark,run_soak
+            if args.benchmark:
+                run_benchmark(args.seed,args.duration,args.out,PROCESS_STARTED); return 0
+            result=run_soak(args.seed,args.nights,args.out)
+            return 0 if result['crashes']==0 and result['mem_end_mb']<=1.2*result['mem_start_mb'] else 1
+        except (ValueError,OSError,RuntimeError,ImportError) as error:
+            print(str(error),file=sys.stderr); return 2
     if args.headless:
         if args.ticks is None or args.ticks < 0 or args.out is None or args.snapshot_every <= 0:
             parser.error("headless requires --ticks >= 0, --out, and --snapshot-every > 0")

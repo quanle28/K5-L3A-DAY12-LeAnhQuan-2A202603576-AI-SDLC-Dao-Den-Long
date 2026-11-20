@@ -1,0 +1,57 @@
+name: Standalone release
+on:
+  push:
+    tags: ['v1.0.0']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  package:
+    strategy:
+      matrix:
+        os: [ubuntu-22.04, windows-latest, macos-14]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python tools/build.py
+      - run: python -m unittest discover -s tests -q
+      - run: python tools/package_release.py --install
+      - if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update && sudo apt-get install -y xvfb
+          xvfb-run -a dist/DaoDenLong/DaoDenLong --benchmark --seed 42 --duration 1 --out binary-gui.json
+      - if: runner.os == 'Windows'
+        run: dist/DaoDenLong/DaoDenLong.exe --benchmark --seed 42 --duration 1 --out binary-gui.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: standalone-${{ matrix.os }}
+          path: dist/*.zip
+  publish:
+    if: startsWith(github.ref, 'refs/tags/')
+    needs: package
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          path: release-assets
+          merge-multiple: true
+      - uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const tag = context.ref.replace('refs/tags/', '');
+            const release = await github.rest.repos.createRelease({
+              ...context.repo, tag_name: tag, name: 'Đảo Đèn Lồng — Bình minh v1.0.0',
+              body: fs.readFileSync('docs/release-v1.0.0.md', 'utf8'), draft: false, prerelease: false
+            });
+            const files = fs.readdirSync('release-assets').filter(n => n.endsWith('.zip')).map(n => ['release-assets/' + n, n]);
+            files.push(['docs/demo/demo.mp4','demo.mp4'], ['bench.json','bench.json'], ['soak.json','soak.json']);
+            for (const [path, name] of files) {
+              await github.rest.repos.uploadReleaseAsset({...context.repo, release_id: release.data.id, name, data: fs.readFileSync(path)});
+            }

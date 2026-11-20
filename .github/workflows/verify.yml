@@ -1,4 +1,4 @@
-name: Phase 3 verification
+name: Phase 4 verification
 on: [push, pull_request]
 jobs:
   contract:
@@ -16,7 +16,7 @@ jobs:
         if: always()
         with:
           name: proof-${{ matrix.os }}
-          path: docs/proof/phase-3
+          path: docs/proof/phase-4
   linux-desktop:
     runs-on: ubuntu-latest
     steps:
@@ -31,4 +31,4 @@ jobs:
         if: always()
         with:
           name: linux-desktop-proof
-          path: docs/proof/phase-3
+          path: docs/proof/phase-4

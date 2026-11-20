@@ -1,4 +1,4 @@
-"""Phase3 gate: retained regressions, fuel/drain/dawn scenarios and full nights."""
+"""Phase4 gate: retained regressions, fuel/drain/dawn scenarios and full nights."""
 from datetime import datetime,timezone
 import hashlib
 import json
@@ -11,7 +11,7 @@ import tempfile
 import time
 
 ROOT=Path(__file__).resolve().parents[1]
-PROOF=ROOT/'docs/proof/phase-3'
+PROOF=ROOT/'docs/proof/phase-4'
 
 
 def run(args,timeout=30):
@@ -75,12 +75,12 @@ def verify():
         benchmarks.append(dict(night=night,steps=expected,wall_seconds=elapsed,steps_per_second=expected/elapsed,limit_seconds=30))
     source=[ROOT/'game.py',ROOT/'game.contract.json',ROOT/'requirements.txt']+sorted((ROOT/'src').rglob('*.py'))+sorted((ROOT/'tests').rglob('*.py'))+sorted((ROOT/'tools').glob('*.py'))
     hashes={str(p.relative_to(ROOT)).replace('\\','/'):hashlib.sha256(p.read_bytes().replace(b'\r\n',b'\n')).hexdigest() for p in source}
-    metadata=dict(generated_at_utc=datetime.now(timezone.utc).isoformat(),contract_version='1.2',python=sys.version,platform=platform.platform(),processor=platform.processor(),logical_cpus=os.cpu_count(),
+    metadata=dict(generated_at_utc=datetime.now(timezone.utc).isoformat(),contract_version='1.3',python=sys.version,platform=platform.platform(),processor=platform.processor(),logical_cpus=os.cpu_count(),
                   source_sha256=hashes,scenarios=results,benchmarks=benchmarks,
                   benchmark_fixture='Default standardized map/spawns/duration; long initial invulnerability and disabled wind prevent premature death/fall so full-night throughput is measured.',
                   limitations=['Hidden instructor tests unavailable','GUI/audio/palette/settings checks are recorded separately','Independent human play/listening review not performed'])
     (PROOF/'verification.json').write_text(json.dumps(metadata,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
-    print('PASS: v1.2 tests, %d deterministic scenarios, controlled maintenance replay and all3 full-night gates.'%len(cases))
+    print('PASS: v1.3 tests, %d deterministic scenarios, controlled maintenance replay and all3 full-night gates.'%len(cases))
     return 0
 
 
@@ -88,7 +88,7 @@ def main():
     global PROOF
     try:
         if '--check-only' in sys.argv:
-            with tempfile.TemporaryDirectory(prefix='lantern-v12-gate-') as temp:
+            with tempfile.TemporaryDirectory(prefix='lantern-v13-gate-') as temp:
                 PROOF=Path(temp); os.environ['LANTERN_PROOF_DIR']=temp
                 return verify()
         os.environ['LANTERN_PROOF_DIR']=str(PROOF)

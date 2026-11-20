@@ -24,7 +24,7 @@ def main():
             if result.returncode:
                 print(logs[-1])
                 return 1
-    target=ROOT/'docs/proof/phase-3/clean-check.txt'
+    target=ROOT/'docs/proof/phase-4/clean-check.txt'
     target.write_text('\n'.join(logs),encoding='utf-8')
     print('PASS: fresh directory dependency install, build, tests and controlled maintenance CLI replay without .git, .qa or project caches.')
     return 0

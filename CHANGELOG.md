@@ -1,5 +1,16 @@
 # Changelog
 
+## v1.0.0 / phase-4 — Bình minh / Contract v1.3
+
+- Thêm benchmark chuẩn và raw frame times; soak10Đêm cùng tiến trình, RSS thật.
+- Bảng xếp hạng top10 bền vững, tên Unicode, export CLI, chỉ cộng Đêm thắng.
+- Đổi9phím/báo trùng/khôi phục, phụ đề+edgearrow, giảm chuyển động, chữ18px/lớn1.25.
+- Tối ưu clip viewport và LOD dùng chung game/bench; giữ nguyên28đầu ra CLI Phase3.
+- 96test, GUI/clean/build gates, video live-framebuffer72s, retro4phase,
+  standalone Windows/Linux/macOS và workflow GitHub Release.
+- Không thay luật gameplay1.2. Manifest1.3 thêm bench_cmd/soak_cmd.
+- Bỏ shortcut R chơi lại để phím đó có thể được gán tự do; chơi lại trong pause/result.
+
 ## phase-3 — Đèn cạn dầu / Contract v1.2 — breaking changes
 
 - Đèn sáng không còn vĩnh viễn:100dầu, hao1/s, có refuel/out/ever_lit/relit_count;

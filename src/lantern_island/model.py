@@ -395,15 +395,19 @@ class Game:
                     u=direction(s['pos'],self.pos); amount=min(d,speed*DT)
                     self._shade_move(s,u[0]*amount,u[1]*amount)
             else:
-                weak=[l for l in self.lanterns if l['lit'] and not self.protected(l)]
-                targets=weak or [l for l in self.lanterns if not l['lit']]
-                if targets:
-                    target=min(targets,key=lambda l:(distance(s['pos'],l['pos']),l['id']))
-                    dest=target['pos']; remaining=distance(s['pos'],dest)
-                    amount=min(remaining,speed*DT); u=direction(s['pos'],dest)
-                    if amount: self._shade_move(s,u[0]*amount,u[1]*amount)
-                    if target['lit'] and distance(s['pos'],dest)<=2:
-                        s['state']='drain'; s['target_lantern_id']=target['id']
+                self._wander(s,speed)
+
+    def _wander(self,s,speed):
+        """Same wander motion for gameplay and the benchmark's forced-wander population."""
+        weak=[l for l in self.lanterns if l['lit'] and not self.protected(l)]
+        targets=weak or [l for l in self.lanterns if not l['lit']]
+        if targets:
+            target=min(targets,key=lambda l:(distance(s['pos'],l['pos']),l['id']))
+            dest=target['pos']; remaining=distance(s['pos'],dest)
+            amount=min(remaining,speed*DT); u=direction(s['pos'],dest)
+            if amount: self._shade_move(s,u[0]*amount,u[1]*amount)
+            if target['lit'] and distance(s['pos'],dest)<=2:
+                s['state']='drain'; s['target_lantern_id']=target['id']
 
     def _move_drifters(self):
         for d in self.drifters:

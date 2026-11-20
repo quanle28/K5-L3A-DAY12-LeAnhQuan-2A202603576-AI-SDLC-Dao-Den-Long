@@ -33,3 +33,15 @@
 - Tam giác cảnh báo/dấu chấm, giấy rách/xẹp, fuelbar và tối ưu polygon lồi
   tự viết trong renderer; không tải icon, font, texture hoặc asset bên ngoài.
 - Giữ nguồn/giấy phép của runtime và nội dung đề bài như các mục trên.
+
+## Bổ sung Phase4 / Release
+
+- psutil6.1.1, BSD3-Clause: đo RSS; không cần cho headless gameplay.
+- PyInstaller6.11.1, GPL2.0 với bootloader exception: công cụ build standalone;
+  setuptools75.6.0 và hooks-contrib2024.11 dùng trong môi trường build.
+  Runtime notices của Pygame/psutil được kèm trong ZIP/THIRD-PARTY.
+- imageio-ffmpeg0.6.0, BSD2-Clause: công cụ dev ghi video, không phải dependency
+  của game. FFmpeg/libx264 đi kèm công cụ dùng để encode MP4; không phân phối
+  executable FFmpeg trong gói game. Không dùng footage hoặc âm thanh bên ngoài.
+- Sprite Bóng Mực LOD, clipping, UI/leaderboard và phụ đề do mã trong repo sinh.
+  Video ghi cửa sổ app, phím tự động đã công bố; không dùng model ảnh/video AI.

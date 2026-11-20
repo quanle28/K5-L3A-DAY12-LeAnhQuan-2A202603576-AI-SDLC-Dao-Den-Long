@@ -30,7 +30,7 @@ def main():
         frames.append(dict(tick=tick,move=move,interact=interact)); game.step(c)
     assert game.state=='won',game.snapshot()
     assert game.sim_tick==7200 and sum(l['lit'] for l in game.lanterns)>=3
-    target=Path(os.environ.get('LANTERN_PROOF_DIR',str(ROOT/'docs/proof/phase-3'))); target.mkdir(parents=True,exist_ok=True)
+    target=Path(os.environ.get('LANTERN_PROOF_DIR',str(ROOT/'docs/proof/phase-4'))); target.mkdir(parents=True,exist_ok=True)
     data={'frames':frames}; validate_inputs(data)
     inp=target/'maintenance.inputs.json'; inp.write_text(json.dumps(data,separators=(',',':'))+'\n',encoding='utf-8')
     out=target/'maintenance.jsonl'

@@ -1,7 +1,7 @@
 # Đảo Đèn Lồng — working instructions
 
-- Read `docs/adr/0003-fuel-and-dawn.md` and `docs/requirements/phase-3.md`.
-  Complete Ticket-03/v1.2 was supplied in chat. Ticket-04 is not supplied.
+- Read `docs/requirements/phase-4.md` and ADR0003. Complete Ticket-04/v1.3
+  was supplied in chat. Keep every v1.2 gameplay rule unchanged.
 - Python 3.9+; pure simulation in `model.py`, geometry in `maps.py`, Pygame GUI in
   `view.py`/`render.py`. `python tools/build.py` installs pinned runtime into .runtime.
 - Run: `python game.py`. Tests: `python -m unittest discover -s tests -v`.
@@ -23,6 +23,12 @@
 - GUI gate is >=30 FPS at 1280x720 for every night. Full-night headless <=30 seconds.
 - Audio smoke uses dummy mixer; do not describe it as a human listening test.
 - Render tests do not replace manual play or independent review; report honestly.
-- Preserve phase-1/phase-2 tags and proof. Phase3 output goes to docs/proof/phase-3.
+- Preserve phase-1/2/3 tags and proof. Phase4 output goes to docs/proof/phase-4.
+- Benchmark: exact200wander/100motes/3lit100, orbitR30Y15/15s, warm3s;
+  disable spawn/damage/pickup/fuel/end. Shared renderer, no hidden quality downgrade.
+- Benchmark/soak numbers must be actual. Save raw dt and RSS method. Report local
+  thresholds separately from instructor hardware; do not fabricate a pass.
+- Leaderboard/settings data are local user data, never commit them. Tests use temp dirs.
+- Demo must show live GUI/real command output; disclose automated input, never call it human play.
 - Do not create phase tags or a final release before the corresponding ticket is
   implemented and verified. Never fabricate historical deadlines or token metrics.

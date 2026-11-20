@@ -29,7 +29,7 @@ def replay(game,ticks=60,frames=None,every=10):
 class ContractTests(unittest.TestCase):
     def test_manifest_standard_numbers(self):
         m=json.loads((ROOT/'game.contract.json').read_text(encoding='utf-8'))
-        self.assertEqual(m['contract_version'],'1.2')
+        self.assertEqual(m['contract_version'],'1.3')
         expected=dict(player_speed=6,carry_capacity=10,lantern_cost=10,pickup_radius=1,interact_radius=2,
                       pulse_cost=3,pulse_radius=5,pulse_cooldown_s=3,pulse_stun_s=2,pulse_push_m=4,
                       safe_radius=6,shade_speed=4,shade_hit_radius=1,invuln_s=1.5,hit_drop_ratio=.5,

@@ -32,7 +32,7 @@ def main():
                     app.draw(); pg.display.flip(); pg.event.pump()
                 elapsed=time.perf_counter()-start
                 results.append(dict(night=night,frames=180,shades=len(app.game.shades),drifters=len(app.game.drifters),motes=len(app.game.motes),wall_seconds=elapsed,average_fps=180/elapsed))
-            out=ROOT/'docs/proof/phase-3/renderer-stress.json'
+            out=ROOT/'docs/proof/phase-4/renderer-stress.json'
             out.write_text(json.dumps(dict(generated_at_utc=datetime.now(timezone.utc).isoformat(),resolution=[1280,720],platform=platform.platform(),driver=pg.display.get_driver(),results=results,
                                          fixture='Supported scenario sets maximum6/8/10 shades at standard fog points and all5/6/7 lamps fueled100; invulnerability/no wind prevent early death. Includes sim, draw, flip and event pump; real window, no limiter.'),indent=2)+'\n',encoding='utf-8')
             print(json.dumps(results,indent=2))

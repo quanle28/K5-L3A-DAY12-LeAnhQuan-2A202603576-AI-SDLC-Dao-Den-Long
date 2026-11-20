@@ -10,7 +10,7 @@ from src.lantern_island.maps import PALETTE
 
 
 def main():
-    pg.font.init(); target=ROOT/'docs/proof/phase-3'; target.mkdir(parents=True,exist_ok=True)
+    pg.font.init(); target=ROOT/'docs/proof/phase-4'; target.mkdir(parents=True,exist_ok=True)
     for night in (1,2,3):
         surface=pg.Surface((1280,720)); canvas=PygameCanvas(surface)
         g=Game(12,{'lanterns':[{'id':'L1','lit':True},{'id':'L2','lit':True}]},night)

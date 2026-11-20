@@ -1,0 +1,1 @@
+PASS: controlled maintenance survives all7200steps to dawn; CLI replay matched (580points).

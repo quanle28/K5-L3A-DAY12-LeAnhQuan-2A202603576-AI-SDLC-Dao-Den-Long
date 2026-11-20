@@ -1,32 +1,26 @@
-# Đảo Đèn Lồng · Ba hòn đảo
+# Đảo Đèn Lồng · Đèn cạn dầu
 
-**Phase 2 · Ticket-02 · Test Contract v1.1** — Lê Anh Quân · `2A202603576`
+**Phase 3 · Ticket-03 · Test Contract v1.2** — Lê Anh Quân · `2A202603576`
 
-[Bằng chứng Phase 2](docs/proof/phase-2/README.md) ·
-[Tiêu chí nghiệm thu / giả định](docs/requirements/phase-2.md) ·
-[Bảng chuẩn](docs/requirements/phase-2-standard.md) ·
-[Nhật ký AI / retro](docs/notes/phase-2.md)
+[Proof Phase3](docs/proof/phase-3/README.md) · [Spec](docs/requirements/phase-3.md) ·
+[ADR về thay luật](docs/adr/0003-fuel-and-dawn.md) · [AI log / retro](docs/notes/phase-3.md)
 
-Video demo cuối lab sẽ thực hiện ở Phase 4. Ticket-03/04 chưa được cung cấp.
-Tag `phase-1` và toàn bộ bằng chứng Phase 1 được giữ nguyên để chấm lại.
+**Luật mới: thắp hết đèn chưa thắng.** Mây phải sống đến bình minh và giữ ít
+nhất **3/5, 4/6, 5/7 đèn sáng** tương ứng ba Đêm. Thắng Đêm1 rồi chọn
+**Đêm tiếp theo / Enter** mới chuyển sang map2. Thời lượng: **240/270/300 giây**.
+Hết lửa luôn thua, kể cả tick bình minh. Đóng phiên game cũ rồi mở lại để dùng luật mới.
 
-Mây đội nón lá, mang chiếc đèn nhỏ qua Đảo Bến, Đảo Cau và Đảo Chuông.
-Gom đom đóm, nạp đèn, tránh Bóng Mực và Gió Lạc, qua cầu tre và bục nhảy
-để mang ánh sáng về trước Bình Minh. Phối cảnh 3D được dựng bằng phần mềm;
-Pygame xử lý framebuffer, input và âm thanh. Logic 60Hz dùng chung với headless.
+![Chế độ dễ phân biệt và dầu thấp](docs/proof/phase-3/colorblind-low-on.png)
 
-![Đảo Cau từ framebuffer game](docs/proof/phase-2/night2.png)
+*Framebuffer thật từ GUI smoke tự động, không phải clip chơi tay. So sánh
+[nửa chu kỳ tắt](docs/proof/phase-3/colorblind-low-off.png) /
+[sau châm dầu](docs/proof/phase-3/refueled.png).*
 
-*Ảnh được lưu trực tiếp từ framebuffer trong GUI smoke tự động, không phải
-video người chơi. [Đảo Chuông](docs/proof/phase-2/night3.png) ·
-[HUD đếm ngược](docs/proof/phase-2/hud-danger.png) ·
-[Bảng vật liệu](docs/proof/phase-2/palette.png).*
+## Cài và chơi — 3 lệnh
 
-## Cài và chơi — tối đa 3 lệnh
-
-Cần Python 3.9+ có pip và desktop macOS/Linux/Windows. Lần build đầu cần
-mạng để cài Pygame 2.6.1 vào `.runtime` trong dự án; sau đó chơi offline.
-Không cần API key, GPU, Tkinter hoặc Pillow.
+Python3.9+ có pip và desktop Windows/macOS/Linux. Build cài Pygame2.6.1
+vào `.runtime` trong repo (cần mạng lần đầu); sau đó chơi offline.
+Không cần API key, GPU, Tkinter hay Pillow.
 
 ```bash
 git clone https://github.com/quanle28/K5-L3A-DAY12-LeAnhQuan-2A202603576-AI-SDLC-Dao-Den-Long.git
@@ -34,100 +28,82 @@ cd K5-L3A-DAY12-LeAnhQuan-2A202603576-AI-SDLC-Dao-Den-Long
 python3 tools/build.py --run
 ```
 
-Đã có repo trên Windows: `python tools/build.py --run`. Sau khi build,
-chạy lại bằng `python game.py` (macOS/Linux dùng `python3`).
-Build riêng: `python3 tools/build.py`; lệnh manifest không tự mở GUI.
-Menu → giới thiệu Ông Đăng → chơi → kết quả → Đêm sau → Bình Minh.
-Thua được chơi lại Đêm hiện tại. Điểm tổng chỉ gồm các Đêm đã thắng.
+Đã có repo trên Windows: `python tools/build.py --run`. Chạy lại sau build:
+`python game.py` (macOS/Linux dùng `python3`). Menu → giới thiệu → chơi → kết
+quả → Đêm sau → Bình Minh. Pause có tiếp tục/chơi lại/cài đặt/về menu.
 
-## Điều khiển
-
-| Phím / thao tác | Hành động |
+| Điều khiển | Hành động |
 |---|---|
-| WASD / mũi tên | Di chuyển theo camera, điều khiển đầy đủ trên không |
-| Space | Nhảy khi chạm đất |
-| Shift | Lướt 14m/s trong 12tick, hồi 1,5s; đứng yên dùng hướng đang quay |
-| E | Nạp ánh sáng vào đèn chưa sáng gần nhất trong 2m |
-| F | Tỏa sáng tốn 3 đom đóm, choáng/đẩy Bóng Mực trong bán kính 3D 5m |
-| Giữ chuột phải và kéo / Q,C | Xoay camera |
-| Esc / P | Tạm dừng: tiếp tục, chơi lại Đêm, cài đặt, về menu |
-| R | Chơi lại Đêm đang chơi |
-| Enter | Bắt đầu / tiếp tục flow sau kết quả |
+| WASD / mũi tên | Di chuyển theo camera |
+| Space / Shift | Nhảy / lướt |
+| E | Nạp đèn tắt hoặc châm dầu đèn sáng gần nhất nhận được |
+| F | Tỏa Sáng, tốn3đomđóm, choáng/đẩy Bóng Mực |
+| Giữ chuột phải / Q,C | Xoay camera |
+| Esc / P | Tạm dừng |
+| R | Chơi lại Đêm |
 
-Cài đặt âm lượng/độ nhạy được lưu ở `~/.lantern_island/settings.json`.
-Có nhạc nền riêng từng Đêm và SFX tự tổng hợp cho các hành động/sự kiện.
-Nếu máy không có thiết bị audio, game vẫn chạy; âm thanh cần kiểm tra trên
-thiết bị thực, không coi smoke mixer giả lập là nghe thử.
+## Dầu, sức chứa, điểm
 
-## Luật và điểm chuẩn
+- Đèn sáng có100dầu, hao1/giây. E châm10dầu/mote theo ceil phần thiếu, tốiđa100.
+  Đèn thật sự đầy không nhận. Hết dầu tắt, reset tiến độ; lần đầu cần10mote,
+  thắp lại chỉ5. Dầu tính chính xác theo unit1/60, chỉ làm tròn lúc xuất.
+- Dầu≥30 có vùng bảo vệ6m. Dầu<30 mất bảo vệ, nhấp nháy1Hz và có thể bị
+  Bóng Mực wander tìm tới hút5dầu/giây/con. Tỏa Sáng ngắt drain; châm lên≥30
+  đẩy bóng trong vùng ra ngoài trong≤30tick, không gây hit khi đang đẩy.
+- Sức chứa **10+2×số lần thắp thành công**, cap20, gồm tái thắp; reset mỗi Đêm.
+  HUD hiển thị đang mang/sức chứa. Đèn dựng sẵn trong scenario không tăng counter.
+- Điểm mới: +5/mote nạp hoặc châm; +100thắp đầu/+40thắp lại;
+  +5/shade trúng pulse, **tổng15** nếu nó đang drain. Khi thắng: mỗi đèn sáng
+  +50+floor(dầu) và mỗi lửa +50. **Không thưởng thời gian**; tổng chỉ cộng Đêm thắng.
+- Gió Lạc, Bùa Gió, nhảy/lướt, rơi/hồi sinh, bản đồ và âm thanh giữ từ Phase2.
 
-Mang tối đa **10** đom đóm; mỗi đèn cần **10**, nạp từng phần được. Chạy
-6m/s, nhảy7m/s, gravity−20. Ba lửa, thời lượng **300 / 330 / 360 giây**,
-số đèn **5 / 6 / 7**. Đèn sáng chặn Bóng Mực ở vùng6m; Bóng Mực đang trong
-vùng lúc đèn sáng bị đẩy ra trong30tick và không gây hit trong lúc đó.
+Cài đặt **Bảng màu dễ phân biệt** được lưu cùng âm lượng/độ nhạy tại
+`~/.lantern_island/settings.json`: shade viền/mắt xanh#00B3FF; cảnh báo trắng
+kèm tam giác ⚠ vẽ vector. Đèn tắt có giấy rách và thân giấy xẹp20%, phân biệt
+không cần màu. [Changelog breaking changes](CHANGELOG.md).
 
-Bị chạm mất1lửa, rơi floor(carried/2) đom đóm trong8giây, bất tử1,5s.
-Rơi dướiY−10 bỏ qua bất tử, mất1lửa và toàn bộ đồ; chờ60tick hồi sinh.
-Tỏa Sáng hồi3s, choáng120tick và đẩy4m trong15tick. Lướt không bất tử.
-Bùa Gió10s tăng chạy7,2m/s và bỏ hồi chiêu lướt; nhặt lại làm mới.
+## Headless v1.2 / kiểm chứng
 
-Điểm: **+10 mỗi đom đóm NẠP**, **+100 mỗi đèn**, **+5 mỗi Bóng Mực trúng
-Tỏa Sáng**, kể cả đang choáng. Thắng thêm **floor(giây còn lại)×2+50×lửa**.
-Ưu tiên kết thúc đúng Ticket-02: **hết lửa → thua; còn sống và đủ đèn → thắng;
-còn lại hết giờ → thua**. Tuning ở [game.contract.json](game.contract.json).
-
-Đêm2: cầu tre không lan can, hai bục vàng phóng qua đảo, Gió Lạc cướp đồ.
-Đêm3: dùng hai dốc lên tầng1 rồi bục vàng tới tầng chuông; gió mạnh mỗi30s,
-báo trước2s. Màu vật liệu đúng bảng chuẩn; ambient=.15+.55×lit/count.
-
-## Headless v1.1
-
-Không cần Pygame, display, GPU hoặc audio khi chỉ chạy headless.
+Headless dùng stdlib, không cần Pygame/display/audio. Lệnh ví dụ tick bình minh
+đèn vừa hết dầu nhưng được thắp lại kịp:
 
 ```bash
-python3 game.py --headless --seed 12 --night 2 --scenario tests/scenarios/v11/charm.json --inputs tests/scenarios/v11/charm.inputs.json --ticks 30 --snapshot-every 1 --out run.jsonl
+python3 game.py --headless --seed 12 --night 1 --scenario tests/scenarios/v12/dawn-relight.json --inputs tests/scenarios/v12/dawn-relight.inputs.json --ticks 1 --snapshot-every 1 --out run.jsonl
 ```
 
-`--night` nhận1/2/3, snapshot mặc định mỗi10tick. Tick0 chỉ setup, không
-cộng điểm/phát event. Input tickk tạo state/event tickk+1. Input vắng giữ
-giá trị cũ; jump/interact/pulse/dash/pause kích hoạt khi false→true.
-Pause vẫn tăng tick, đóng băng sim_tick và mọi counter/spawn/TTL; snapshot
-state paused. JSONL đủ snapshot/event/end v1.1, tọa độ3decimals và ID tất định.
-`--ticks 0` chỉ snapshot0 và end. File sai exit2+stderr; lỗi output exit1.
-
-Scenario v1.0 vẫn nhận; v1.1 thêm counters/player, shade state/timer,
-drifters/charms và flags. Schema cho các field chưa ghi chi tiết trong
-ticket được nêu tại [spec](docs/requirements/phase-2.md), không ẩn giả định.
-
-## Kiểm chứng
+Giữ CLI v1.1, night1/2/3, tick0 setup, input persistence/rising-edge,
+60Hz, tick/sim_tick khi pause, JSONL snapshot/event/end, malformed exit2.
+Thêm fuel/ever_lit/relit_count, capacity, drain/target, refuel/lantern_out/
+fuel_drain, dawn_survived; `all_lit` không còn là reason. Snapshot fuel1decimal,
+nhưng threshold và bonus floor dùng giá trị nguyên chưa làm tròn.
+Manifest: [game.contract.json](game.contract.json).
 
 ```bash
 python3 tools/verify.py
 ```
 
-Gate chạy build, **58 test**, **14 scenario hai lần để so từng byte**,
-bot thắng Đêm1 bằng input hợp lệ và benchmark trọn ba Đêm ≤30s/Đêm.
-Lưu log, JSONL, hash nguồn và môi trường ở `docs/proof/phase-2`.
+Gate chạy build, **83test**, **28scenario replay2lần**, maintenance challenge
+120s và full-night benchmarks≤30s. Log/hash nguồn/môi trường ở proof Phase3.
+Scenario v1.1 không bị thay vẫn chạy; ba scenario thắng sớm đã được thay bằng
+ca bình minh, có ghi rõ trong ADR/retro, không skip âm thầm.
 
-- `python3 tools/gui_smoke.py`: GUI flow, pause/settings/audio/HUD, ảnh và FPS
-  cả3Đêm ở1280×720; FPS<30 thì exit khác0. Cần desktop hoặc Xvfb trên Linux.
-- `python3 tools/stress_renderer.py`: đo thêm khi đủ6/8/10 Bóng Mực.
+- `python3 tools/gui_smoke.py`: flow/settings/accessibility/fuel blink/HUD và≥30FPS1280×720.
+- `python3 tools/stress_renderer.py`: đủ6/8/10shade và tất cả đèn sáng có dầu.
 - `python3 tools/clean_check.py`: cài/build/test/replay trong thư mục sạch.
-- `python3 tools/verify.py --check-only`: không sửa proof, dùng cho pre-commit.
-- `python3 tools/render_png.py` / `tools/export_scene.py`: xuất hình/SVG offscreen.
+- `python3 tools/verify.py --check-only`: gate không sửa proof, dùng cho pre-commit.
+- `python3 tools/render_png.py` / `tools/export_scene.py`: xuất offscreen PNG/SVG.
 
-Hook chặn commit test đỏ: `git config core.hooksPath .githooks`.
-CI kiểm tra headless trên Windows/macOS/Linux và desktop Linux/Xvfb.
-Số đo local có trong JSON, không coi đó là kết quả trên máy chấm chung.
-Test ẩn của giảng viên và đánh giá độc lập/chơi tay/nghe thật chưa có.
+CI headless Windows/macOS/Linux và GUI Linux/Xvfb. Số đo local không đại diện
+máy chấm. Chưa có test ẩn, chơi/nghe thử độc lập hoặc video demo cuối lab.
+Audio smoke dùng mixer dummy, không giả nhận là đã nghe trên loa.
 
-## Sáng tạo của tôi
+## Sáng tạo của tôi / lịch sử
 
-Giữ nón lá/đèn nhỏ, hình khối cổ tích, sao/biển mây, vòng Tỏa Sáng, ánh sáng
-ấm khi thắp đèn; thêm các giai điệu PCM gốc cho từng Đêm. Trang trí và nhạc
-không dùng RNG gameplay hoặc thêm thực thể headless. Các replay deterministic
-và test hồi quy là bằng chứng phần sáng tạo không làm đổi contract.
+Giữ nón lá/đèn nhỏ, biển mây, sao, vòng pulse, nhạc PCM gốc. Điều chỉnh ánh
+sáng theo đèn đang cháy, thêm giấy rách và cảnh báo vector không phụ thuộc font.
+Trang trí/cài đặt không đổi RNG hay output headless; có test model bất biến khi
+đổi palette. Tag/proof `phase-1` và `phase-2` giữ nguyên. Ticket04 chưa nhận;
+video và Releasev1.0.0 chờ Phase4.
 
-Tài liệu đề bài gốc: [README gốc](docs/lab/README.original.md), [GUIDE](GUIDE.md),
-[RUBRIC](RUBRIC.md), [RULES](RULES.md), [SUBMISSION](SUBMISSION.md).
-[CREDITS](CREDITS.md) · [LICENSE](LICENSE) · [CHANGELOG](CHANGELOG.md)
+[README đề bài gốc](docs/lab/README.original.md) · [RULES](RULES.md) ·
+[RUBRIC](RUBRIC.md) · [SUBMISSION](SUBMISSION.md) · [CREDITS](CREDITS.md) · [LICENSE](LICENSE)

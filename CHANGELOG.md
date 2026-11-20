@@ -1,5 +1,20 @@
 # Changelog
 
+## phase-3 — Đèn cạn dầu / Contract v1.2 — breaking changes
+
+- Đèn sáng không còn vĩnh viễn:100dầu, hao1/s, có refuel/out/ever_lit/relit_count;
+  firstcost10,relight5. Safe chỉ khi fuel≥30. Wander/drain AI hút5/s cộng dồn.
+- **Bỏ early-win/all_lit**. Đêm240/270/300s, chỉ thắng dawn_survived khi còn
+  sống và đủceil60%đèn; no_flames ưu tiên trước ở tick cuối.
+- Capacity10+2mỗi lần thắp, cap20. **Thay toàn bộ điểm**:5/mote,100first,
+  40relight,5pulse/15drainpulse, dawn50+floorfuel/lamp+50/flame, bỏ timebonus.
+- Contract1.2 thêm fuel/ever_lit/relit_count/capacity/drain/target và events;
+  lantern_lit thêm relight. Scenario mới, điểm/setup/history được phân biệt.
+- Colorblind lưu bền, warning trắng+vector⚠, shade viền/mắt xanh, giấy rách/xẹp,
+  fuelbar nhấp nháy1Hz. Tối ưu convex floor/disc, không đổi collision/tuning.
+- ADR0003,83test,28scenario replay, controlledmaintenance và GUI/FPS/clean gates.
+  Giữ nguyên tag/proof1–2; chưa làm Ticket04.
+
 ## phase-2 — Ba hòn đảo / Contract v1.1
 
 - Chuẩn hóa toàn bộ tuning, score khi nạp, tick order, XZ/height/3D pulse,

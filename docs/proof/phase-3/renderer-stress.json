@@ -1,0 +1,39 @@
+{
+  "generated_at_utc": "2026-11-20T09:37:34.334333+00:00",
+  "resolution": [
+    1280,
+    720
+  ],
+  "platform": "Windows-10-10.0.22631-SP0",
+  "driver": "windows",
+  "results": [
+    {
+      "night": 1,
+      "frames": 180,
+      "shades": 6,
+      "drifters": 0,
+      "motes": 21,
+      "wall_seconds": 2.7627889,
+      "average_fps": 65.15155754390067
+    },
+    {
+      "night": 2,
+      "frames": 180,
+      "shades": 8,
+      "drifters": 0,
+      "motes": 21,
+      "wall_seconds": 3.4960125,
+      "average_fps": 51.48723009428599
+    },
+    {
+      "night": 3,
+      "frames": 180,
+      "shades": 10,
+      "drifters": 0,
+      "motes": 21,
+      "wall_seconds": 3.5162286000000007,
+      "average_fps": 51.19121094686505
+    }
+  ],
+  "fixture": "Supported scenario sets maximum6/8/10 shades at standard fog points and all5/6/7 lamps fueled100; invulnerability/no wind prevent early death. Includes sim, draw, flip and event pump; real window, no limiter."
+}

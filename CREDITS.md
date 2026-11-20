@@ -26,3 +26,10 @@
 - Mô hình/tọa độ/bảng màu mới theo Ticket-02 do người dùng cung cấp; phần đề
   bài vẫn giữ quyền của tác giả lab. Font hệ điều hành được dùng tại runtime,
   không đóng gói font. Không cần Pillow hoặc Tkinter cho bản Phase2.
+
+## Bổ sung Phase 3
+
+- Luật dầu/drain/dawn và màu accessibility theo Ticket-03 người dùng cung cấp.
+- Tam giác cảnh báo/dấu chấm, giấy rách/xẹp, fuelbar và tối ưu polygon lồi
+  tự viết trong renderer; không tải icon, font, texture hoặc asset bên ngoài.
+- Giữ nguồn/giấy phép của runtime và nội dung đề bài như các mục trên.

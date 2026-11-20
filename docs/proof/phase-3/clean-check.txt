@@ -1,0 +1,100 @@
+$ python tools/build.py
+Collecting pygame==2.6.1 (from -r C:\Users\Le Anh Quan\AppData\Local\Temp\lantern-clean-acnu3fif\game\requirements.txt (line 1))
+  Using cached pygame-2.6.1-cp39-cp39-win_amd64.whl.metadata (13 kB)
+Using cached pygame-2.6.1-cp39-cp39-win_amd64.whl (10.6 MB)
+Installing collected packages: pygame
+Successfully installed pygame-2.6.1
+Build OK: 11 Python modules; pinned Pygame desktop runtime ready. Headless uses only stdlib.
+
+$ python -m unittest discover -s tests -v
+test_bad_json_duplicate_and_nonfinite (test_contract_v12.ContractTests) ... ok
+test_cadence_and_exact_tick_count (test_contract_v12.ContractTests) ... ok
+test_chase_detection_hysteresis_and_speed (test_contract_v12.ContractTests) ... ok
+test_cli_all_nights_and_malformed_exit_two (test_contract_v12.ContractTests) ... ok
+test_dash_distance_duration_and_cooldown (test_contract_v12.ContractTests) ... ok
+test_dash_uses_facing_and_air_locks_height (test_contract_v12.ContractTests) ... ok
+test_dawn_exact_step (test_contract_v12.ContractTests) ... ok
+test_explicit_empty_lists_and_flags (test_contract_v12.ContractTests) ... ok
+test_fall_ignores_invulnerability_and_respawns_after_60 (test_contract_v12.ContractTests) ... ok
+test_far_or_empty_deposit (test_contract_v12.ContractTests) ... ok
+test_hit_half_drop_invulnerability_recoil_and_single_hit (test_contract_v12.ContractTests) ... ok
+test_hit_height_gate (test_contract_v12.ContractTests) ... ok
+test_id_reservation_and_seed_determinism (test_contract_v12.ContractTests) ... ok
+test_invalid_inputs (test_contract_v12.ContractTests) ... ok
+test_invalid_scenarios (test_contract_v12.ContractTests) ... ok
+test_jump_ballistic_and_no_held_repeat (test_contract_v12.ContractTests) ... ok
+test_manifest_standard_numbers (test_contract_v12.ContractTests) ... ok
+test_mote_initial_counts_points_and_spawn_schedule (test_contract_v12.ContractTests) ... ok
+test_movement_speed_and_partial_input_magnitude (test_contract_v12.ContractTests) ... ok
+test_nearest_tie_id_and_only_remaining (test_contract_v12.ContractTests) ... ok
+test_no_flames_priority_over_all_lit_and_dawn (test_contract_v12.ContractTests) ... ok
+test_partial_deposit_edge_and_scoring (test_contract_v12.ContractTests) ... ok
+test_partial_frame_persistence (test_contract_v12.ContractTests) ... ok
+test_pause_freezes_every_counter_and_simulation (test_contract_v12.ContractTests) ... ok
+test_pause_runner_does_not_treat_pause_as_terminal (test_contract_v12.ContractTests) ... ok
+test_pickup_inclusive_radius_height_capacity_no_score (test_contract_v12.ContractTests) ... ok
+test_pickup_outside_radius (test_contract_v12.ContractTests) ... ok
+test_pulse_cost_cooldown_and_rising_edge (test_contract_v12.ContractTests) ... ok
+test_pulse_is_3d_and_locks_targets (test_contract_v12.ContractTests) ... ok
+test_safe_boundary_blocks_chase (test_contract_v12.ContractTests) ... ok
+test_safe_zone_ejects_without_damage_in_30_steps (test_contract_v12.ContractTests) ... ok
+test_scenario_updates_without_events_or_score (test_contract_v12.ContractTests) ... ok
+test_shade_schedule_cap_and_distance (test_contract_v12.ContractTests) ... ok
+test_snapshot_v11_fields_and_rounding (test_contract_v12.ContractTests) ... ok
+test_stun_duration_and_push_refresh (test_contract_v12.ContractTests) ... ok
+test_win_at_dawn_and_bonus (test_contract_v12.ContractTests) ... ok
+test_yaw_formula (test_contract_v12.ContractTests) ... ok
+test_zero_ticks_is_setup_only (test_contract_v12.ContractTests) ... ok
+test_bridge_and_island_edges (test_contract_v12.NewFeaturesTests) ... ok
+test_campaign_won_only_total_and_settings_roundtrip (test_contract_v12.NewFeaturesTests) ... ok
+test_charm_can_be_collected_at_full_capacity (test_contract_v12.NewFeaturesTests) ... ok
+test_charm_pick_refresh_speed_and_no_dash_cd (test_contract_v12.NewFeaturesTests) ... ok
+test_charm_respawn_and_dropped_ttl (test_contract_v12.NewFeaturesTests) ... ok
+test_dash_can_climb_a_ramp_without_climbing_wall (test_contract_v12.NewFeaturesTests) ... ok
+test_drifter_chase_condition_and_removal (test_contract_v12.NewFeaturesTests) ... ok
+test_drifter_contact_cannot_underflow_small_inventory (test_contract_v12.NewFeaturesTests) ... ok
+test_drifter_pulse_chase_then_flee_drop (test_contract_v12.NewFeaturesTests) ... ok
+test_drifter_spawn_at_1200_and_cap (test_contract_v12.NewFeaturesTests) ... ok
+test_drifter_steals_before_hit_ignores_safe_and_invuln (test_contract_v12.NewFeaturesTests) ... ok
+test_ground_level_scenario_shade_is_not_immobilized (test_contract_v12.NewFeaturesTests) ... ok
+test_launch_pad_locks_horizontal_input_and_lands_other_island (test_contract_v12.NewFeaturesTests) ... ok
+test_maps_and_lantern_counts (test_contract_v12.NewFeaturesTests) ... ok
+test_new_spawn_cannot_be_picked_until_next_step (test_contract_v12.NewFeaturesTests) ... ok
+test_night3_pad_lands_on_top_tier (test_contract_v12.NewFeaturesTests) ... ok
+test_night3_surfaces_ramp_wall_and_tower (test_contract_v12.NewFeaturesTests) ... ok
+test_palette_exact (test_contract_v12.NewFeaturesTests) ... ok
+test_recoil_moves_two_metres_in_sixty_steps (test_contract_v12.NewFeaturesTests) ... ok
+test_wind_schedule_and_pause (test_contract_v12.NewFeaturesTests) ... ok
+test_30_exactly_safe_below_30_allows_entry (test_fuel_v12.FuelTests) ... ok
+test_all_lit_never_ends_early (test_fuel_v12.FuelTests) ... ok
+test_capacity_scenario_is_applied_before_carried_and_caps_at_20 (test_fuel_v12.FuelTests) ... ok
+test_chase_does_not_switch_to_weak_lamp (test_fuel_v12.FuelTests) ... ok
+test_colorblind_settings_persist_and_old_settings_upgrade (test_fuel_v12.FuelTests) ... ok
+test_dawn_thresholds_and_new_bonus_all_nights (test_fuel_v12.FuelTests) ... ok
+test_decay_is_exact_and_out_once (test_fuel_v12.FuelTests) ... ok
+test_drain_exits_for_near_player_or_out_or_distance (test_fuel_v12.FuelTests) ... ok
+test_expiry_at_dawn_loses_but_same_tick_relight_can_win (test_fuel_v12.FuelTests) ... ok
+test_first_light_then_pickup_uses_new_capacity_next_step (test_fuel_v12.FuelTests) ... ok
+test_manifest_fuel_and_score (test_fuel_v12.FuelTests) ... ok
+test_new_scenario_validation (test_fuel_v12.FuelTests) ... ok
+test_no_flames_beats_dawn_survival (test_fuel_v12.FuelTests) ... ok
+test_partial_relight_remembers_progress (test_fuel_v12.FuelTests) ... ok
+test_pause_freezes_fuel_drain_and_cadence_uses_sim_ticks (test_fuel_v12.FuelTests) ... ok
+test_pulse_drain_awards_total15_then_wakes_wander (test_fuel_v12.FuelTests) ... ok
+test_refuel_and_unlit_tie_uses_id (test_fuel_v12.FuelTests) ... ok
+test_refuel_ceil_uses_unrounded_post_decay_fuel (test_fuel_v12.FuelTests) ... ok
+test_refuel_restores_safe_ejection_no_hit_in_30_ticks (test_fuel_v12.FuelTests) ... ok
+test_relight_cost_reward_and_counter (test_fuel_v12.FuelTests) ... ok
+test_setup_defaults_have_no_score_or_capacity_gain (test_fuel_v12.FuelTests) ... ok
+test_snapshot_rounding_does_not_define_full_or_low (test_fuel_v12.FuelTests) ... ok
+test_stack_drain_and_global_sim_tick_event_cadence (test_fuel_v12.FuelTests) ... ok
+test_truly_full_lamp_skipped_in_nearest_selection (test_fuel_v12.FuelTests) ... ok
+test_wander_prioritizes_weak_lit_then_lowest_id (test_fuel_v12.FuelTests) ... ok
+
+----------------------------------------------------------------------
+Ran 83 tests in 0.914s
+
+OK
+
+$ python tools/playthrough.py
+PASS: controlled maintenance survives all7200steps to dawn; CLI replay matched (580points).

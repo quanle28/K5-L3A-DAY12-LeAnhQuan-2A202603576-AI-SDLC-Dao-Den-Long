@@ -4,7 +4,7 @@ Game3D ba Đêm; giữ đủ đèn sáng tới bình minh. Contract1.3, giữ ga
 
 - Tải ZIP đúng hệ Windowsx64/Linuxx64/macOSarm64, giải nén cả thư mục và chạy
   DaoDenLong(.exe). Không cần Python. Linux/mac có thể cần `chmod +x DaoDenLong`.
-  Linux buildUbuntu22.04; macOS14 chưa ký/notarize. Cài từ nguồn: xem README,3lệnh.
+  Linux buildUbuntu22.04; macOS15 chưa ký/notarize. Cài từ nguồn: xem README,3lệnh.
 - Benchmark chuẩn200bóng/100đom đóm; soak10Đêm; bảng điểm top10 cục bộ;
   đổi phím, phụ đề/chỉ báo, giảm chuyển động, chữ lớn và bảng màu dễ phân biệt.
 - Số đo Windows local: avg123.1FPS,1%low58.2FPS,load307ms; soak0crash,

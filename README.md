@@ -32,7 +32,7 @@ Linux cần desktop SDL/X11/Wayland và thư viện âm thanh hệ thống thôn
 Bản ZIP standalone trong Release không cần cài Python: giải nén **cả thư mục**
 `DaoDenLong`, chạy `DaoDenLong.exe` trên Windows hoặc `./DaoDenLong` trên Linux/macOS
 (nếu ZIP mất quyền thực thi: `chmod +x DaoDenLong`). Linux build Ubuntu22.04 x64;
-macOS14 arm64; Windows x64. Bản macOS chưa ký/notarize, có thể cần cho phép mở
+macOS15 arm64; Windows x64. Bản macOS chưa ký/notarize, có thể cần cho phép mở
 trong cài đặt bảo mật hệ thống. Nguồn Python là lựa chọn cho kiến trúc khác.
 
 ## Chơi và điều khiển

@@ -1,6 +1,7 @@
 """Play the untouched default map using only legal contract inputs, then replay CLI."""
 import json
 import math
+import os
 from pathlib import Path
 import subprocess
 import sys
@@ -27,7 +28,7 @@ def main():
         frames.append(dict(tick=tick,move=move,interact=controls['interact']))
         game.step(controls)
     assert game.state=='won',game.snapshot()
-    target=ROOT/'docs/proof/phase-1'
+    target=Path(os.environ.get('LANTERN_PROOF_DIR',str(ROOT/'docs/proof/phase-1')))
     target.mkdir(parents=True,exist_ok=True)
     inputs=target/'full-play.inputs.json'
     data={'frames':frames}

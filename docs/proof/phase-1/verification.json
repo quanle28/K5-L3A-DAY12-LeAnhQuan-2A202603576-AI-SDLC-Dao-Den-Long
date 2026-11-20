@@ -1,0 +1,91 @@
+{
+  "generated_at_utc": "2026-11-20T08:08:54.645147+00:00",
+  "source_sha256": {
+    "game.py": "a8efef1551826f4ceb666fe78602c15615367a7d31bc3a299b015bc3585e7089",
+    "game.contract.json": "6df06c00d54f8d064fa22264eb50b68bbb92d350e94264dd97a40c7bfb8b63a7",
+    "src/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/lantern_island/__init__.py": "81164d1071f8c8afeafb9f4780bc9f3db2330a675077e1a2a4151a63b0ad1862",
+    "src/lantern_island/model.py": "26c102c82528c6fb22d7049de315e2dc161503a1326e7c0d5964d725a20eeb76",
+    "src/lantern_island/view.py": "aaebbb36aecb07711848540910549af6b2e9f48d39af242d8e219e6c865c5a36",
+    "tests/test_contract.py": "144c8c6675b7491258030f81144ad964675da7ea4a47138d93268e057ee95f33",
+    "tools/build.py": "7e89b368696b88c680459378a25e75c4a2eb7f4801f0aef45875073216758806",
+    "tools/clean_check.py": "a0707fbeaa5e3bfde817717b7f790276361b0211e3904d6f76714f1086bebd4a",
+    "tools/export_scene.py": "602cfbc7089ca66479e63b8863f0fe18a53770e2f6193be06eed6fd6a1f28b01",
+    "tools/gui_smoke.py": "b09b0dca5d904b419eb1208027fa0b82968130450d2d5ebbc517a07079eda868",
+    "tools/playthrough.py": "306b7fe5d6b6f6cadf341a41530b4c35375f5dbce9e8c1af275552d759922806",
+    "tools/render_png.py": "567e0ee4a347263f29091d57c567a93a6fd4e966be72403b5660c6156428d427",
+    "tools/verify.py": "2d16b505aaf2a23ea216718b24be398c20d849cf9b8930fcf93bf41ce560f809"
+  },
+  "python": "3.9.7 (tags/v3.9.7:1016ef3, Aug 30 2021, 20:19:38) [MSC v.1929 64 bit (AMD64)]",
+  "platform": "Windows-10-10.0.22631-SP0",
+  "processor": "AMD64 Family 25 Model 80 Stepping 0, AuthenticAMD",
+  "logical_cpus": 12,
+  "results": [
+    {
+      "scenario": "pickup-deposit",
+      "sha256": "cc24573394fd08948def6369cf8aba6470db86c748a17e1784e8c59e4091b002",
+      "deterministic": true,
+      "end": {
+        "type": "end",
+        "ticks": 130,
+        "state": "playing",
+        "score": 200
+      }
+    },
+    {
+      "scenario": "pulse",
+      "sha256": "453a2f1f6c7ee09097dfd94c36f0c62e4d3b2da0abfed393c2b84197f60e35b1",
+      "deterministic": true,
+      "end": {
+        "type": "end",
+        "ticks": 200,
+        "state": "playing",
+        "score": 20
+      }
+    },
+    {
+      "scenario": "win",
+      "sha256": "d0ccff9ab8c2c0a92fcd5cae6a23fb50906134e015444ba2aafa692695bfea90",
+      "deterministic": true,
+      "end": {
+        "type": "end",
+        "ticks": 1,
+        "state": "won",
+        "score": 848
+      }
+    },
+    {
+      "scenario": "loss",
+      "sha256": "b446cca84e5ad0af18e117a43454f17577c1209f85b16dcce8e624d1903b4fd1",
+      "deterministic": true,
+      "end": {
+        "type": "end",
+        "ticks": 1,
+        "state": "lost",
+        "score": 0
+      }
+    },
+    {
+      "scenario": "dawn",
+      "sha256": "ef4db35a8509381a3c9bf5c830887890cd400e52b209f55eb852d84ee0162470",
+      "deterministic": true,
+      "end": {
+        "type": "end",
+        "ticks": 60,
+        "state": "lost",
+        "score": 0
+      }
+    }
+  ],
+  "benchmark": {
+    "wall_seconds": 1.1871782,
+    "steps": 18000,
+    "steps_per_second": 15162.0034801852,
+    "note": "Includes interpreter startup and JSONL I/O; central safe lamp, procedural spawns enabled. Not a rendering FPS measurement."
+  },
+  "limitations": [
+    "No hidden instructor tests available",
+    "macOS/Linux runtime requires CI or another machine",
+    "Visual manual review and independent review must be recorded separately"
+  ]
+}

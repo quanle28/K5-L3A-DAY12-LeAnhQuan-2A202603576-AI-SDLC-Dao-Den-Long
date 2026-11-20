@@ -1,0 +1,13 @@
+{
+  "checks": [
+    "start overlay and 3D scene created",
+    "GUI input adapter moves and jumps using shared simulation",
+    "pause and resume freeze simulation",
+    "both terminal overlays and restart reset game state"
+  ],
+  "canvas_items": 671,
+  "frames": 20,
+  "wall_seconds": 1.1691624999999999,
+  "render_fps": 17.106261961019108,
+  "limitations": "Programmatic smoke on this Windows host; no manual interactive-play review or cross-platform runtime claim."
+}

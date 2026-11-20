@@ -196,6 +196,18 @@ class ContractTests(unittest.TestCase):
         self.assertEqual(r[-1]["state"], "lost")
         self.assertEqual([e for e in r if e.get("name")=="game_over"][0]["data"]["reason"], "dawn")
 
+    def test_fractional_dawn_time_obeys_exact_formula(self):
+        game=Game(scenario=empty(time_left_s=.01))
+        game.step()
+        self.assertEqual(game.snapshot()['time_left_s'], .01-1/60)
+
+    def test_setup_preserves_shade_position_and_has_no_events(self):
+        game=Game(scenario=empty(lanterns=[{'id':'L1','pos':[0,0,0],'lit':True}],shades=[{'id':'inside','pos':[0,0,0]}]))
+        self.assertEqual(game.snapshot()['shades'][0]['pos'],[0,0,0])
+        self.assertEqual(game.events,[])
+        game.step()
+        self.assertGreaterEqual(distance(game.shades[0]['pos'],[0,0,0]),4)
+
     def test_win_bonus_and_early_stop(self):
         lamps=[{"id":"L"+str(i),"lit":True} for i in range(1,5)]
         lamps.append({"id":"L5","pos":[0,0,0],"deposited":9})

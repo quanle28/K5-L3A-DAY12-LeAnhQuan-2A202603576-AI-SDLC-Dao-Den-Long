@@ -1,0 +1,37 @@
+Build OK: 5 Python modules; no third-party dependencies.
+test_camera_rotation_and_diagonal_normalization (test_contract.ContractTests) ... ok
+test_cli_process_output_and_bad_file_exit_two (test_contract.ContractTests) ... ok
+test_dawn_stops_exactly (test_contract.ContractTests) ... ok
+test_default_spawn_and_seed_determinism (test_contract.ContractTests) ... ok
+test_deposit_only_remaining_and_nearest (test_contract.ContractTests) ... ok
+test_explicit_empty_lists_override_defaults (test_contract.ContractTests) ... ok
+test_far_or_empty_deposit_has_no_event (test_contract.ContractTests) ... ok
+test_fixed_steps_and_time (test_contract.ContractTests) ... ok
+test_fractional_dawn_time_obeys_exact_formula (test_contract.ContractTests) ... ok
+test_hit_drop_invulnerability_and_loss (test_contract.ContractTests) ... ok
+test_insufficient_pulse_does_not_spend (test_contract.ContractTests) ... ok
+test_invalid_input_formats (test_contract.ContractTests) ... ok
+test_invalid_scenario_formats (test_contract.ContractTests) ... ok
+test_island_boundary_has_no_fall_penalty (test_contract.ContractTests) ... ok
+test_json_duplicate_keys_and_nonfinite_rejected (test_contract.ContractTests) ... ok
+test_jump_grounded_edge_trigger (test_contract.ContractTests) ... ok
+test_manifest_is_runtime_source (test_contract.ContractTests) ... ok
+test_move_preserves_magnitude (test_contract.ContractTests) ... ok
+test_partial_deposit_and_edge_trigger (test_contract.ContractTests) ... ok
+test_partial_frame_persistence (test_contract.ContractTests) ... ok
+test_pickup_inclusive_xz_and_capacity (test_contract.ContractTests) ... ok
+test_pickup_outside_radius (test_contract.ContractTests) ... ok
+test_pulse_cooldown_and_edge (test_contract.ContractTests) ... ok
+test_pulse_cost_push_stun_inclusive_and_no_hit (test_contract.ContractTests) ... ok
+test_rounds_coordinates_to_three_decimals (test_contract.ContractTests) ... ok
+test_safe_zone_excludes_shades_and_damage (test_contract.ContractTests) ... ok
+test_scenario_updates_by_id_without_score (test_contract.ContractTests) ... ok
+test_setup_preserves_shade_position_and_has_no_events (test_contract.ContractTests) ... ok
+test_shade_chases_at_declared_speed (test_contract.ContractTests) ... ok
+test_win_bonus_and_early_stop (test_contract.ContractTests) ... ok
+test_zero_ticks_and_tick_zero (test_contract.ContractTests) ... ok
+
+----------------------------------------------------------------------
+Ran 31 tests in 0.536s
+
+OK

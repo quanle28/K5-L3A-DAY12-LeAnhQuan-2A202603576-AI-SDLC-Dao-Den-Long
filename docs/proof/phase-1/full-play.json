@@ -1,0 +1,14 @@
+{
+  "seed": 12,
+  "scenario": "default, no overrides",
+  "end": {
+    "type": "end",
+    "ticks": 1543,
+    "state": "won",
+    "score": 1688
+  },
+  "flames": 2,
+  "lit": 5,
+  "method": "Bot observes positions and sends move/interact only; no teleport, resource injection, or modified rules. CLI replay must reach the same result.",
+  "limitations": "Automated gameplay proof, not a recording of human play."
+}

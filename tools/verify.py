@@ -7,6 +7,7 @@ from pathlib import Path
 import subprocess
 import sys
 import time
+import tempfile
 from datetime import datetime, timezone
 
 ROOT=Path(__file__).resolve().parents[1]
@@ -18,7 +19,7 @@ def run(args):
     return result
 
 
-def main():
+def verify():
     PROOF.mkdir(parents=True,exist_ok=True)
     build=run(["tools/build.py"])
     test=run(["-m","unittest","discover","-s","tests","-v"])
@@ -56,13 +57,23 @@ def main():
     benchmark_end=json.loads((PROOF/"benchmark.jsonl").read_text(encoding="utf-8").splitlines()[-1])
     assert benchmark_end["ticks"]==18000
     source_files=[ROOT/"game.py",ROOT/"game.contract.json"]+sorted((ROOT/"src").rglob("*.py"))+sorted((ROOT/"tests").rglob("*.py"))+sorted((ROOT/"tools").glob("*.py"))
-    source_hashes={str(path.relative_to(ROOT)).replace('\\','/'):hashlib.sha256(path.read_bytes()).hexdigest() for path in source_files}
+    source_hashes={str(path.relative_to(ROOT)).replace('\\','/'):hashlib.sha256(path.read_bytes().replace(b'\r\n',b'\n')).hexdigest() for path in source_files}
     metadata=dict(generated_at_utc=datetime.now(timezone.utc).isoformat(),source_sha256=source_hashes,python=sys.version,platform=platform.platform(),processor=platform.processor(),logical_cpus=os.cpu_count(),
                   results=results,benchmark=dict(wall_seconds=elapsed,steps=18000,steps_per_second=18000/elapsed,note="Includes interpreter startup and JSONL I/O; central safe lamp, procedural spawns enabled. Not a rendering FPS measurement."),
                   limitations=["No hidden instructor tests available", "macOS/Linux runtime requires CI or another machine", "Visual manual review and independent review must be recorded separately"])
     (PROOF/"verification.json").write_text(json.dumps(metadata,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     print("PASS: tests, five scenario replays, deterministic JSONL and evidence saved.")
     return 0
+
+
+def main():
+    global PROOF
+    if '--check-only' in sys.argv:
+        with tempfile.TemporaryDirectory(prefix='lantern-gate-') as temp:
+            PROOF=Path(temp)
+            os.environ['LANTERN_PROOF_DIR']=temp
+            return verify()
+    return verify()
 
 
 if __name__=="__main__": sys.exit(main())

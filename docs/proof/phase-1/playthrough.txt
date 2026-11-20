@@ -1,0 +1,1 @@
+PASS: default Night 1 won through contract inputs, CLI replay matched (1543 ticks, 1688 points).

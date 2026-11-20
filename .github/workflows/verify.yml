@@ -1,0 +1,33 @@
+name: Phase 1 verification
+on: [push, pull_request]
+jobs:
+  contract:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python tools/verify.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: proof-${{ matrix.os }}
+          path: docs/proof/phase-1
+  linux-desktop:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: sudo apt-get update && sudo apt-get install -y python3-tk xvfb
+      - run: xvfb-run -a python tools/gui_smoke.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: linux-desktop-proof
+          path: docs/proof/phase-1

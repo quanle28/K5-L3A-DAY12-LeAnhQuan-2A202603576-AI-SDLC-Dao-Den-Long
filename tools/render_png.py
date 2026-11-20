@@ -1,34 +1,28 @@
-"""Optional QA export: pip install Pillow --target .qa; not a game dependency."""
+"""Offscreen exports from the same Pygame renderer, without a display/audio device."""
 from pathlib import Path
 import sys
-
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT))
-sys.path.insert(0,str(ROOT/'.qa'))
-from PIL import Image, ImageDraw, ImageFont
+from src.lantern_island.pygame_canvas import pg,PygameCanvas
+from src.lantern_island.render import Scene
 from src.lantern_island.model import Game
-from src.lantern_island.view import Scene
+from src.lantern_island.maps import PALETTE
 
 
-class ImageCanvas:
-    def delete(self,*args):
-        self.image=Image.new('RGB',(1152,760))
-        self.draw=ImageDraw.Draw(self.image)
-    def create_rectangle(self,*coords,**kw): self.draw.rectangle(coords,fill=kw.get('fill'),outline=kw.get('outline') or None,width=int(kw.get('width',1)))
-    def create_oval(self,*coords,**kw): self.draw.ellipse(coords,fill=kw.get('fill'),outline=kw.get('outline') or None)
-    def create_polygon(self,*coords,**kw): self.draw.polygon(list(zip(coords[::2],coords[1::2])),fill=kw.get('fill'))
-    def create_line(self,*coords,**kw): self.draw.line(list(zip(coords[::2],coords[1::2])),fill=kw.get('fill'),width=int(kw.get('width',1)))
-    def create_text(self,x,y,**kw):
-        spec=kw.get('font',('Segoe UI',11))
-        name='segoeuib.ttf' if 'bold' in spec else 'segoeui.ttf'
-        try: font=ImageFont.truetype('C:/Windows/Fonts/'+name,round(spec[1]*1.2))
-        except OSError: font=ImageFont.truetype('DejaVuSans.ttf',round(spec[1]*1.2))
-        self.draw.multiline_text((x,y),kw.get('text',''),font=font,fill=kw.get('fill','#ffffff'),anchor='lm' if kw.get('anchor')=='w' else 'mm',align='center',spacing=8)
+def main():
+    pg.font.init(); target=ROOT/'docs/proof/phase-2'; target.mkdir(parents=True,exist_ok=True)
+    for night in (1,2,3):
+        surface=pg.Surface((1280,720)); canvas=PygameCanvas(surface)
+        g=Game(12,{'lanterns':[{'id':'L1','lit':True},{'id':'L2','lit':True}]},night)
+        Scene(canvas).draw(g,25,1280,720)
+        pg.image.save(surface,str(target/('lit-night%d.png'%night)))
+    surface=pg.Surface((900,600)); c=PygameCanvas(surface); c.delete('all')
+    for i,(name,color) in enumerate(PALETTE.items()):
+        x=20+(i%4)*220; y=20+(i//4)*110
+        c.create_rectangle(x,y,x+195,y+60,fill=color,outline='')
+        c.create_text(x+98,y+80,text=name+' '+color,fill=PALETTE['text'],font=('Segoe UI',11))
+    pg.image.save(surface,str(target/'palette.png'))
+    print('Offscreen lit-map and exact material palette PNG exports saved (not interactive-play screenshots).')
 
 
-if __name__=='__main__':
-    for name,scenario,yaw in [('scene-start',None,0),('scene-lit',{'lanterns':[{'id':'L1','lit':True},{'id':'L2','lit':True}]},45)]:
-        canvas=ImageCanvas()
-        Scene(canvas).draw(Game(12,scenario),yaw,1152,760,started=True)
-        canvas.image.save(ROOT/('docs/proof/phase-1/'+name+'.png'))
-    print('PNG exports saved. These are offscreen scene renders, not desktop screenshots.')
+if __name__=='__main__': main()

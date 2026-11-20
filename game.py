@@ -1,4 +1,4 @@
-"""CLI entry point: Test Contract v1.0 and a shared-logic desktop game."""
+"""CLI entry point: Test Contract v1.1 and a shared-logic desktop game."""
 import argparse
 import json
 import sys
@@ -33,16 +33,16 @@ def run_headless(game, frames, ticks, snapshot_every, stream):
             write(event)
         if game.tick % snapshot_every == 0:
             write(game.snapshot())
-        if game.state != "playing":
+        if game.state in ("won", "lost"):
             break
     write(dict(type="end", ticks=game.tick, state=game.state, score=game.score))
 
 
 def main(argv=None):
-    parser = argparse.ArgumentParser(description="Đảo Đèn Lồng · Test Contract v1.0")
+    parser = argparse.ArgumentParser(description="Đảo Đèn Lồng · Test Contract v1.1")
     parser.add_argument("--headless", action="store_true")
     parser.add_argument("--seed", type=int, default=12)
-    parser.add_argument("--night", type=int, choices=[1], default=1)
+    parser.add_argument("--night", type=int, choices=[1,2,3], default=1)
     parser.add_argument("--scenario", type=Path)
     parser.add_argument("--inputs", type=Path)
     parser.add_argument("--ticks", type=int)
@@ -55,7 +55,7 @@ def main(argv=None):
         try:
             scenario = load_json(args.scenario) if args.scenario else None
             frames = validate_inputs(load_json(args.inputs)) if args.inputs else []
-            game = Game(args.seed, scenario)
+            game = Game(args.seed, scenario, args.night)
         except (OSError, ValueError, TypeError, OverflowError) as error:
             print("Invalid inputs/scenario: " + str(error), file=sys.stderr)
             return 2
@@ -72,7 +72,7 @@ def main(argv=None):
             from src.lantern_island.view import play
             play(args.seed)
         except ImportError as error:
-            print("Desktop needs Tkinter (Ubuntu: sudo apt install python3-tk). " + str(error), file=sys.stderr)
+            print("Desktop runtime missing: run python3 tools/build.py. " + str(error), file=sys.stderr)
             return 1
     return 0
 

@@ -10,7 +10,7 @@ import sys
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT))
 from src.lantern_island.model import Game
-from src.lantern_island.view import Scene
+from src.lantern_island.render import Scene
 
 
 class SvgCanvas:
@@ -39,13 +39,13 @@ class SvgCanvas:
 
 
 def main():
-    target=ROOT/'docs/proof/phase-1'
+    target=ROOT/'docs/proof/phase-2'
     target.mkdir(parents=True,exist_ok=True)
-    for name,scenario,yaw in [('scene-start',None,0),('scene-lit',{'lanterns':[{'id':'L1','lit':True},{'id':'L2','lit':True}]},45)]:
-        canvas=SvgCanvas()
-        Scene(canvas).draw(Game(12,scenario),yaw,1152,760,started=True)
-        canvas.save(target/(name+'.svg'))
-    print('Exported two offscreen frames from the same renderer used by the desktop game.')
+    for night in (1,2,3):
+        canvas=SvgCanvas(1280,720)
+        Scene(canvas).draw(Game(12,night=night),25,1280,720,started=True)
+        canvas.save(target/('night%d.svg'%night))
+    print('Exported all three standard maps from the shared renderer.')
 
 
 if __name__=='__main__': main()

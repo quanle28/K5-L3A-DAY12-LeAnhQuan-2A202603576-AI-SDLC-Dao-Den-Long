@@ -14,7 +14,7 @@ def main():
     with tempfile.TemporaryDirectory(prefix='lantern-clean-') as temp:
         clean=Path(temp)/'game'
         clean.mkdir()
-        for name in ('game.py','game.contract.json'):
+        for name in ('game.py','game.contract.json','requirements.txt'):
             shutil.copy2(ROOT/name,clean/name)
         for name in ('src','tests','tools'):
             shutil.copytree(ROOT/name,clean/name,ignore=shutil.ignore_patterns('__pycache__','*.pyc'))
@@ -24,9 +24,9 @@ def main():
             if result.returncode:
                 print(logs[-1])
                 return 1
-    target=ROOT/'docs/proof/phase-1/clean-check.txt'
+    target=ROOT/'docs/proof/phase-2/clean-check.txt'
     target.write_text('\n'.join(logs),encoding='utf-8')
-    print('PASS: fresh directory build, tests and default-map CLI playthrough without .git, .qa or caches.')
+    print('PASS: fresh directory dependency install, build, tests and standard-map CLI playthrough without .git, .qa or project caches.')
     return 0
 
 

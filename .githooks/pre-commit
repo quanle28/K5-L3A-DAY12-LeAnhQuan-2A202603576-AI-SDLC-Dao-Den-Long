@@ -1,5 +1,5 @@
 #!/bin/sh
-# A failed verification blocks the commit. Never hide the exit code.
+# v1.1: all feature scenarios + full-night benchmarks; failure blocks commit.
 if python3 --version >/dev/null 2>&1; then
   exec python3 tools/verify.py --check-only
 else

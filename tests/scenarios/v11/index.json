@@ -1,0 +1,86 @@
+[
+  {
+    "name": "deposit",
+    "night": 1,
+    "ticks": 10,
+    "event": "lantern_lit"
+  },
+  {
+    "name": "dash",
+    "night": 1,
+    "ticks": 20,
+    "event": "dash"
+  },
+  {
+    "name": "fall",
+    "night": 1,
+    "ticks": 65,
+    "event": "player_hit"
+  },
+  {
+    "name": "pause",
+    "night": 1,
+    "ticks": 100,
+    "event": "resumed"
+  },
+  {
+    "name": "pulse",
+    "night": 1,
+    "ticks": 150,
+    "event": "pulse"
+  },
+  {
+    "name": "drifter-steal",
+    "night": 2,
+    "ticks": 3,
+    "event": "drifter_steal"
+  },
+  {
+    "name": "drifter-drop",
+    "night": 2,
+    "ticks": 130,
+    "event": "drifter_drop"
+  },
+  {
+    "name": "charm",
+    "night": 2,
+    "ticks": 30,
+    "event": "charm_picked"
+  },
+  {
+    "name": "launch",
+    "night": 2,
+    "ticks": 85,
+    "event": "night_start"
+  },
+  {
+    "name": "tiers",
+    "night": 3,
+    "ticks": 55,
+    "event": "night_start"
+  },
+  {
+    "name": "wind",
+    "night": 3,
+    "ticks": 2101,
+    "event": "night_start"
+  },
+  {
+    "name": "win-night1",
+    "night": 1,
+    "ticks": 10,
+    "event": "game_over"
+  },
+  {
+    "name": "win-night2",
+    "night": 2,
+    "ticks": 10,
+    "event": "game_over"
+  },
+  {
+    "name": "win-night3",
+    "night": 3,
+    "ticks": 10,
+    "event": "game_over"
+  }
+]

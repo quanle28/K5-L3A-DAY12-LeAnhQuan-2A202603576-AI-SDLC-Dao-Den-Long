@@ -14,3 +14,15 @@
   không đóng gói hoặc cần cho game/headless. PNG từ renderer được ghi rõ là
   offscreen, không giả làm ảnh chụp phiên chơi trực tiếp.
 - Không có âm thanh hay asset bên ngoài cần CC-BY attribution trong bản Phase 1.
+
+## Bổ sung Phase 2
+
+- Pygame2.6.1 (SDL/SDL_mixer): renderer/input/audio runtime, theo LGPL2.1
+  và giấy phép thư viện đi kèm bản phân phối. Cài từ PyPI qua requirements.txt,
+  không commit runtime binary. Tài liệu API chính thức:
+  https://www.pygame.org/docs/ref/draw.html và https://www.pygame.org/docs/ref/mixer.html.
+- Nhạc3Đêm/SFX: PCM tự tổng hợp từ các nốt sin trong audio.py, viết riêng cho
+  repo bằng Codex; không tải sample/nhạc ngoài. Có metadata nguồn trong mã.
+- Mô hình/tọa độ/bảng màu mới theo Ticket-02 do người dùng cung cấp; phần đề
+  bài vẫn giữ quyền của tác giả lab. Font hệ điều hành được dùng tại runtime,
+  không đóng gói font. Không cần Pillow hoặc Tkinter cho bản Phase2.

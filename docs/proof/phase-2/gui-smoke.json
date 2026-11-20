@@ -1,0 +1,48 @@
+{
+  "generated_at_utc": "2026-11-20T09:02:54.879506+00:00",
+  "platform": "Windows-10-10.0.22631-SP0",
+  "python": "3.9.7 (tags/v3.9.7:1016ef3, Aug 30 2021, 20:19:38) [MSC v.1929 64 bit (AMD64)]",
+  "pygame": "2.6.1",
+  "display_driver": "windows",
+  "resolution": [
+    1280,
+    720
+  ],
+  "checks": [
+    "real desktop flow: menu, intro, movement, jump, dash",
+    "pause freezes sim; settings persist; sensitivity changes mouse yaw",
+    "loss/retry, all three result/next transitions, dawn and won-only totals",
+    "original PCM music and every required SFX routed to initialized dummy mixer",
+    "HUD near-E prompt, red30s timer, offscreen lantern arrow and ambient endpoints"
+  ],
+  "runs": [
+    {
+      "night": 1,
+      "frames": 180,
+      "wall_seconds": 4.3016755,
+      "average_fps": 41.84416049048795,
+      "sim_tick": 900,
+      "state": "playing",
+      "shades": 3
+    },
+    {
+      "night": 2,
+      "frames": 180,
+      "wall_seconds": 4.5944893,
+      "average_fps": 39.177368418291884,
+      "sim_tick": 900,
+      "state": "playing",
+      "shades": 3
+    },
+    {
+      "night": 3,
+      "frames": 180,
+      "wall_seconds": 4.139847099999999,
+      "average_fps": 43.47986668396522,
+      "sim_tick": 900,
+      "state": "playing",
+      "shades": 3
+    }
+  ],
+  "limitations": "Programmatic real framebuffer/flow test. Dummy audio driver tests PCM/mixer routing; not a human listening or independent play review. FPS is local hardware throughput including logic, draw, flip and event pump, without a frame limiter."
+}

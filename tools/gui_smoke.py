@@ -77,8 +77,12 @@ def main():
             assert any(key[1]=='00:30' and key[2]==PALETTE['danger'] for key in rendered)
             pg.image.save(app.surface,str(target/'hud-danger.png'))
             app.game=Game(12); app.yaw=180; app.canvas.text_cache.clear(); app.draw()
-            assert any(key[1].startswith('L1 ·') for key in app.canvas.text_cache)
             assert abs(app.scene.ambient-.15)<1e-9
+            # Rounded standard map coordinates make L3 slightly closer than L1.
+            # Isolate L1 as the only unlit lamp to test the offscreen-arrow path.
+            for lamp in app.game.lanterns[1:]: lamp['lit']=True
+            app.canvas.text_cache.clear(); app.draw()
+            assert any(key[1].startswith('L1 ·') for key in app.canvas.text_cache)
             for lamp in app.game.lanterns: lamp['lit']=True
             app.draw(); assert abs(app.scene.ambient-.70)<1e-9
             checks.append('HUD near-E prompt, red30s timer, offscreen lantern arrow and ambient endpoints')

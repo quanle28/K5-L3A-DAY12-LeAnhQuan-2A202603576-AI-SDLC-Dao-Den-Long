@@ -1,0 +1,39 @@
+{
+  "generated_at_utc": "2026-11-20T09:05:17.058820+00:00",
+  "resolution": [
+    1280,
+    720
+  ],
+  "platform": "Windows-10-10.0.22631-SP0",
+  "driver": "windows",
+  "results": [
+    {
+      "night": 1,
+      "frames": 180,
+      "shades": 6,
+      "drifters": 0,
+      "motes": 24,
+      "wall_seconds": 4.1998897,
+      "average_fps": 42.85826839690576
+    },
+    {
+      "night": 2,
+      "frames": 180,
+      "shades": 8,
+      "drifters": 2,
+      "motes": 24,
+      "wall_seconds": 4.813377,
+      "average_fps": 37.39578262828779
+    },
+    {
+      "night": 3,
+      "frames": 180,
+      "shades": 10,
+      "drifters": 2,
+      "motes": 30,
+      "wall_seconds": 4.829584199999999,
+      "average_fps": 37.27028923111021
+    }
+  ],
+  "fixture": "Standard map/spawn caps at sim_tick4200, invulnerability and no wind prevent early death. Includes simulation, renderer, flip and event pump; actual window, no frame limiter."
+}

@@ -218,6 +218,15 @@ class Scene:
         c.create_text(w/2,h-23,text='WASD · SPACE nhảy · SHIFT lướt · F tỏa sáng · P / ESC tạm dừng',fill=p['text'],font=('Segoe UI',10))
         c.create_text(w-110,h-63,text='Lướt %.1fs'%max(0,g.dash_cd_ticks/60),fill=p['gold'],font=('Segoe UI',11))
         c.create_text(w-110,h-39,text='Tỏa sáng %.1fs'%max(0,g.pulse_cd_ticks/60),fill=p['lamp'],font=('Segoe UI',11))
+        # Actual cooldown icons, not just text: dash chevrons and an eight-ray pulse.
+        xx=w-220; yy=h-63
+        dash_color=p['unlit'] if g.dash_cd_ticks else p['gold']
+        c.create_polygon(xx-10,yy-8,xx,yy,xx-10,yy+8,xx-4,yy+8,xx+7,yy,xx-4,yy-8,fill=dash_color)
+        yy=h-39; pulse_color=p['unlit'] if g.pulse_cd_ticks else p['lamp']
+        c.create_oval(xx-4,yy-4,xx+4,yy+4,fill=pulse_color,outline='')
+        for i in range(8):
+            a=i*math.tau/8
+            c.create_line(xx+7*math.cos(a),yy+7*math.sin(a),xx+12*math.cos(a),yy+12*math.sin(a),fill=pulse_color,width=2)
         if g.charm_ticks: c.create_text(110,h-58,text='BÙA GIÓ %.1fs'%(g.charm_ticks/60),fill=p['red'],font=('Segoe UI',12,'bold'))
         unlit=[l for l in g.lanterns if not l['lit']]
         if unlit:

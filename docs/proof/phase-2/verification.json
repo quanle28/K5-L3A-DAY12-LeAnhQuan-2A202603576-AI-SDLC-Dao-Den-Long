@@ -1,0 +1,233 @@
+{
+  "generated_at_utc": "2026-11-20T09:04:26.450066+00:00",
+  "contract_version": "1.1",
+  "python": "3.9.7 (tags/v3.9.7:1016ef3, Aug 30 2021, 20:19:38) [MSC v.1929 64 bit (AMD64)]",
+  "platform": "Windows-10-10.0.22631-SP0",
+  "processor": "AMD64 Family 25 Model 80 Stepping 0, AuthenticAMD",
+  "logical_cpus": 12,
+  "source_sha256": {
+    "game.py": "ef5d78c31286aac795c11cb89e4d8c6c2ebbd8a1be1e7ca602937c84e8dc8e57",
+    "game.contract.json": "a8e8cb30da68102c91b11f9fd54585b410b3f5b783e350e46c561c9f63744f8a",
+    "requirements.txt": "e7277bb5a0c03f2c4d5759ea2e139901be458794fbd8ff6194352ef9f39aba9d",
+    "src/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/lantern_island/__init__.py": "81164d1071f8c8afeafb9f4780bc9f3db2330a675077e1a2a4151a63b0ad1862",
+    "src/lantern_island/audio.py": "c5a1ce962ed14a9651922a621ec940af661833b0357a57b2052a68a0f90a4cc9",
+    "src/lantern_island/campaign.py": "fe2b1c29f29af3c73a6292e027f15107f12bbb79e7830a64500be54d20c97ddc",
+    "src/lantern_island/maps.py": "e6a703d5914f5176d4d9bf847d6d7268aac0cb7ef294ccae62ff0fa937fcca20",
+    "src/lantern_island/model.py": "17eb1a9610adf2a55c71ef0fbf043861df6f04f602f6dd2a7476bd452bfee1ff",
+    "src/lantern_island/pygame_canvas.py": "fea1be7f269dd470332453ea509a11ce04a9875712c05ad94fdd5cb418377787",
+    "src/lantern_island/render.py": "41848375845bdfae70e154093d42a93c444122dc7d4f28e92cf0987c7bac479d",
+    "src/lantern_island/validation.py": "cbfcf974570a28d4f7834b3700af94fffcce2867a0c78d548d732084fb03be60",
+    "src/lantern_island/view.py": "4d4a953467f8045d5c8d5acc77cf293751532d993a7e3454a0acf255e46a0e84",
+    "tests/test_contract_v11.py": "dc6a1e39246066d67250d474b9c7e49b7bd5b1e7b7ebd26fb5e702816609fdfc",
+    "tools/benchmark_renderer.py": "3a7268d341b8ab680dda2fdbce04de728b5011e4b5cfef4118aadfda20cf2596",
+    "tools/build.py": "9e9f1f6cd103d72039b9244d8887da3483c12583ee8e6521b8be5f34d3ad39f7",
+    "tools/clean_check.py": "7a395c7ca08972d04cc4b98f0a53f3e96573ebefc9af12e79ac4bea7f04a4355",
+    "tools/export_scene.py": "38fc24cb4b21e9b011b75678ee60f5e93be4781f66ad166650ecb01346135164",
+    "tools/gui_smoke.py": "f050a8943a4b63170eba1d3b03042496fde02ce8b3d7734f394587916413d0c9",
+    "tools/make_scenarios.py": "a7afeafa79951869eaee14c1aca944d6518fad2b1829af4e4499f371df222176",
+    "tools/playthrough.py": "2bc7af8da5b3d5ba214d822b352be6144905b233516d29d23fd2ad895b6f9236",
+    "tools/render_png.py": "c8c9b08650c3a212f2a3b2372dac9e3b5e5b52f664026b7611823e3d0636b717",
+    "tools/stress_renderer.py": "742d608a0e50773a73c460a694cf853f76a46f46f9c40d28f4ea70da5c288d2b",
+    "tools/verify.py": "67e5f76235a4277a8e9dc4e90a76cfb74b731afe586dcd470c72da565a47ef0a"
+  },
+  "scenarios": [
+    {
+      "name": "deposit",
+      "night": 1,
+      "sha256": "713726dec14a954ad7e2f716e035a5cdf9cf3e34afcd84d072ab4df4645f0e81",
+      "deterministic": true,
+      "end": {
+        "type": "end",
+        "ticks": 10,
+        "state": "playing",
+        "score": 200
+      }
+    },
+    {
+      "name": "dash",
+      "night": 1,
+      "sha256": "133d1142342a8eabdef5534552db6f78ee47d532b3bd6fcec95e047b090e4413",
+      "deterministic": true,
+      "end": {
+        "type": "end",
+        "ticks": 20,
+        "state": "playing",
+        "score": 0
+      }
+    },
+    {
+      "name": "fall",
+      "night": 1,
+      "sha256": "f72422f28af63ffe4d0bf821da734b9988ca64e9a87186292ce0299e7bd5141b",
+      "deterministic": true,
+      "end": {
+        "type": "end",
+        "ticks": 65,
+        "state": "playing",
+        "score": 0
+      }
+    },
+    {
+      "name": "pause",
+      "night": 1,
+      "sha256": "eacfff2e124174dfc224286dd16e220e2fd7ca8e1612aad64bf925b60323775b",
+      "deterministic": true,
+      "end": {
+        "type": "end",
+        "ticks": 100,
+        "state": "playing",
+        "score": 0
+      }
+    },
+    {
+      "name": "pulse",
+      "night": 1,
+      "sha256": "56d592e2324ec516b3ebd775bd08c8d94bd77368e1eedff2207e075320d4619f",
+      "deterministic": true,
+      "end": {
+        "type": "end",
+        "ticks": 150,
+        "state": "playing",
+        "score": 5
+      }
+    },
+    {
+      "name": "drifter-steal",
+      "night": 2,
+      "sha256": "cae39661c8d70cb12c208deca818c1e95050110af57a30b30a8d97fce6062840",
+      "deterministic": true,
+      "end": {
+        "type": "end",
+        "ticks": 3,
+        "state": "playing",
+        "score": 0
+      }
+    },
+    {
+      "name": "drifter-drop",
+      "night": 2,
+      "sha256": "efb56f7d1f79d6990503637ce64f03166553e9ebebed6ec597829db2f57c87aa",
+      "deterministic": true,
+      "end": {
+        "type": "end",
+        "ticks": 130,
+        "state": "playing",
+        "score": 0
+      }
+    },
+    {
+      "name": "charm",
+      "night": 2,
+      "sha256": "b21605694a9dc321817b0efdccd4a5d307725ea7ae8ce05397b766465b874b7a",
+      "deterministic": true,
+      "end": {
+        "type": "end",
+        "ticks": 30,
+        "state": "playing",
+        "score": 0
+      }
+    },
+    {
+      "name": "launch",
+      "night": 2,
+      "sha256": "d7906800a30a4a4e7c9a7b88ccec99f90660b35bf086882a19f8bc397a0c0a1f",
+      "deterministic": true,
+      "end": {
+        "type": "end",
+        "ticks": 85,
+        "state": "playing",
+        "score": 0
+      }
+    },
+    {
+      "name": "tiers",
+      "night": 3,
+      "sha256": "f2ae25768e9e21cf392c7619d0d360d1dcaa9b0f90b47a30928465689eac3318",
+      "deterministic": true,
+      "end": {
+        "type": "end",
+        "ticks": 55,
+        "state": "playing",
+        "score": 0
+      }
+    },
+    {
+      "name": "wind",
+      "night": 3,
+      "sha256": "aa3f865c86400d7799dda64e936dd98dcdf02c619c4ce4776bf7a8aa5022b0a7",
+      "deterministic": true,
+      "end": {
+        "type": "end",
+        "ticks": 2101,
+        "state": "playing",
+        "score": 0
+      }
+    },
+    {
+      "name": "win-night1",
+      "night": 1,
+      "sha256": "ba84d23ff20ff0d9944a569a33d09ba68c643922368cdbc218770d6fbd743182",
+      "deterministic": true,
+      "end": {
+        "type": "end",
+        "ticks": 1,
+        "state": "won",
+        "score": 748
+      }
+    },
+    {
+      "name": "win-night2",
+      "night": 2,
+      "sha256": "0c03d8ff6b57ba94062acd79f8a506665d377264dddfd853995f45d622d3df67",
+      "deterministic": true,
+      "end": {
+        "type": "end",
+        "ticks": 1,
+        "state": "won",
+        "score": 808
+      }
+    },
+    {
+      "name": "win-night3",
+      "night": 3,
+      "sha256": "27c6c46d19a7247bfb5eb4b371d030b440c306529f9cfb3d271d3df4c54436f5",
+      "deterministic": true,
+      "end": {
+        "type": "end",
+        "ticks": 1,
+        "state": "won",
+        "score": 868
+      }
+    }
+  ],
+  "benchmarks": [
+    {
+      "night": 1,
+      "steps": 18000,
+      "wall_seconds": 1.0393987000000005,
+      "steps_per_second": 17317.704938441806,
+      "limit_seconds": 30
+    },
+    {
+      "night": 2,
+      "steps": 19800,
+      "wall_seconds": 1.4445176999999987,
+      "steps_per_second": 13706.997152059832,
+      "limit_seconds": 30
+    },
+    {
+      "night": 3,
+      "steps": 21600,
+      "wall_seconds": 2.4572432000000006,
+      "steps_per_second": 8790.33870151721,
+      "limit_seconds": 30
+    }
+  ],
+  "benchmark_fixture": "Default standardized map/spawns/duration; long initial invulnerability and disabled wind prevent premature death/fall so full-night throughput is measured.",
+  "limitations": [
+    "Hidden instructor tests unavailable",
+    "GUI/audio/palette/settings checks are recorded separately",
+    "Independent human play/listening review not performed"
+  ]
+}

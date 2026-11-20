@@ -1,0 +1,14 @@
+{
+  "seed": 1,
+  "scenario": "default, no overrides",
+  "end": {
+    "type": "end",
+    "ticks": 11107,
+    "state": "won",
+    "score": 1403
+  },
+  "flames": 3,
+  "lit": 5,
+  "method": "Bot observes positions and sends move/interact/dash/pulse only; no teleport, resource injection, or modified rules. CLI replay must reach the same result.",
+  "limitations": "Automated gameplay proof, not a recording of human play. Phase 1 greedy bot lost under new rules; steering and seed 1 are used here."
+}

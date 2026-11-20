@@ -8,7 +8,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 contract = json.loads((ROOT / "game.contract.json").read_text(encoding="utf-8"))
-assert contract["contract_version"] == "1.1"
+assert contract["contract_version"] == "1.2"
 assert contract["tuning"]["lantern_count_night1"] == 5
 sources = [ROOT / "game.py"] + list((ROOT / "src").rglob("*.py"))
 for source in sources:

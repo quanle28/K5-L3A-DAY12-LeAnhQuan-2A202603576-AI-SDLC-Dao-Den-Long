@@ -20,15 +20,16 @@ class Campaign:
 class Settings:
     def __init__(self,path=None):
         self.path=Path(path) if path else Path.home()/'.lantern_island'/'settings.json'
-        self.volume=.5; self.sensitivity=.25
+        self.volume=.5; self.sensitivity=.25; self.colorblind=False
         try:
             data=json.loads(self.path.read_text(encoding='utf-8'))
             volume,sensitivity=data['volume'],data['sensitivity']
             if type(volume) in (float,int) and type(sensitivity) in (float,int) and 0<=volume<=1 and .05<=sensitivity<=1:
                 self.volume,self.sensitivity=volume,sensitivity
+            if type(data.get('colorblind',False)) is bool: self.colorblind=data.get('colorblind',False)
         except (OSError,ValueError,KeyError,TypeError): pass
     def save(self):
         self.path.parent.mkdir(parents=True,exist_ok=True)
         tmp=self.path.with_suffix('.tmp')
-        tmp.write_text(json.dumps(dict(volume=self.volume,sensitivity=self.sensitivity))+'\n',encoding='utf-8')
+        tmp.write_text(json.dumps(dict(volume=self.volume,sensitivity=self.sensitivity,colorblind=self.colorblind))+'\n',encoding='utf-8')
         tmp.replace(self.path)

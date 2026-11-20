@@ -7,7 +7,9 @@
   Acceptance matrix/giả định: [phase-2.md](phase-2.md); [bảng chuẩn](phase-2-standard.md).
   Bằng chứng: [phase-2](../proof/phase-2), gồm test, CLI replay, full-night benchmark,
   GUI/campaign/settings/audio/FPS. CI của commit công bố được kiểm tra sau push.
-- Ticket-03/04 chưa nhận; không suy đoán hoặc tạo tag phase-3/phase-4,
+- Đã nhận Ticket-03/v1.2, có ADR và acceptance criteria tại [phase-3.md](phase-3.md).
+  Triển khai dầu/drain/dawn/capacity/điểm/colorblind, proof tại [phase-3](../proof/phase-3).
+- Ticket-04 chưa nhận; không suy đoán hoặc tạo tag phase-4,
   không tạo Release v1.0.0 khi chưa triển khai/kiểm chứng đủ yêu cầu.
 - Chưa có test ẩn của giảng viên. Kiểm tra local trên Windows; đa nền tảng qua CI.
 - Chưa có video chơi trực tiếp hoặc đánh giá độc lập của người khác.

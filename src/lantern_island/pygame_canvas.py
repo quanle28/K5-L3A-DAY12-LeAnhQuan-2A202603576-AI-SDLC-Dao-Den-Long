@@ -36,9 +36,16 @@ class PygameCanvas:
             cache=(key,line,kw.get('fill','#ffffff'))
             if cache not in self.text_cache:
                 if len(self.text_cache)>512: self.text_cache.clear()
-                self.text_cache[cache]=font.render(line,True,cache[2])
+                # Some system fonts lack U+26A0. Draw that warning as geometry below.
+                self.text_cache[cache]=font.render(line.replace('⚠','  '),True,cache[2])
             image=self.text_cache[cache]
             rect=image.get_rect()
             if kw.get('anchor')=='w': rect.midleft=(x,y+(i-(len(lines)-1)/2)*font.get_linesize())
             else: rect.center=(x,y+(i-(len(lines)-1)/2)*font.get_linesize())
             self.surface.blit(image,rect)
+            if '⚠' in line:
+                height=max(10,round(size*.7)); cx=rect.left+height/2; cy=rect.centery
+                color=kw.get('fill','#ffffff'); stroke=max(1,round(size/16))
+                pg.draw.polygon(self.surface,color,[(cx,cy-height/2),(cx-height/2,cy+height/2),(cx+height/2,cy+height/2)],stroke)
+                pg.draw.line(self.surface,color,(cx,cy-height*.15),(cx,cy+height*.12),stroke)
+                pg.draw.circle(self.surface,color,(round(cx),round(cy+height*.32)),max(1,stroke//2))

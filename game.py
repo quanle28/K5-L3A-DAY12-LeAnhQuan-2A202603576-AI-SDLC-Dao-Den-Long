@@ -1,4 +1,4 @@
-"""CLI entry point: Test Contract v1.1 and a shared-logic desktop game."""
+"""CLI entry point: Test Contract v1.2 and a shared-logic desktop game."""
 import argparse
 import json
 import sys
@@ -39,7 +39,7 @@ def run_headless(game, frames, ticks, snapshot_every, stream):
 
 
 def main(argv=None):
-    parser = argparse.ArgumentParser(description="Đảo Đèn Lồng · Test Contract v1.1")
+    parser = argparse.ArgumentParser(description="Đảo Đèn Lồng · Test Contract v1.2")
     parser.add_argument("--headless", action="store_true")
     parser.add_argument("--seed", type=int, default=12)
     parser.add_argument("--night", type=int, choices=[1,2,3], default=1)

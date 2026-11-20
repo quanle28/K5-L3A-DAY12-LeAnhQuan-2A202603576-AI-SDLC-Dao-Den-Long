@@ -1,4 +1,4 @@
-"""Behavior tests for v1.1; superseded v1.0 expectations documented in notes."""
+"""Retained regression behaviors, with replaced expectations migrated to v1.2."""
 import io
 import json
 import math
@@ -29,12 +29,12 @@ def replay(game,ticks=60,frames=None,every=10):
 class ContractTests(unittest.TestCase):
     def test_manifest_standard_numbers(self):
         m=json.loads((ROOT/'game.contract.json').read_text(encoding='utf-8'))
-        self.assertEqual(m['contract_version'],'1.1')
+        self.assertEqual(m['contract_version'],'1.2')
         expected=dict(player_speed=6,carry_capacity=10,lantern_cost=10,pickup_radius=1,interact_radius=2,
                       pulse_cost=3,pulse_radius=5,pulse_cooldown_s=3,pulse_stun_s=2,pulse_push_m=4,
                       safe_radius=6,shade_speed=4,shade_hit_radius=1,invuln_s=1.5,hit_drop_ratio=.5,
-                      dash_speed=14,dash_duration_s=.2,dash_cooldown_s=1.5,night1_duration_s=300,
-                      night2_duration_s=330,night3_duration_s=360,fall_enabled=True)
+                      dash_speed=14,dash_duration_s=.2,dash_cooldown_s=1.5,night1_duration_s=240,
+                      night2_duration_s=270,night3_duration_s=300,fall_enabled=True)
         for k,v in expected.items(): self.assertEqual(TUNING[k],v,k)
 
     def test_zero_ticks_is_setup_only(self):
@@ -47,7 +47,7 @@ class ContractTests(unittest.TestCase):
         r=replay(Game(scenario=quiet()),123)
         self.assertEqual([e['tick'] for e in r if e['type']=='snapshot'],list(range(0,121,10)))
         self.assertEqual(r[-1]['ticks'],123)
-        self.assertEqual(r[-2]['time_left_s'],298)
+        self.assertEqual(r[-2]['time_left_s'],238)
 
     def test_movement_speed_and_partial_input_magnitude(self):
         for move,expected in [([0,1],6),([0,.5],3),([1,1],6)]:
@@ -82,10 +82,10 @@ class ContractTests(unittest.TestCase):
     def test_partial_deposit_edge_and_scoring(self):
         g=Game(scenario=quiet(player={'carried':4},lanterns=[{'id':'L1','pos':[2,0,0]}]))
         e=g.step(controls(interact=True)); self.assertEqual(named(e,'deposit')[0]['data']['amount'],4)
-        self.assertEqual(g.score,40); g.carried=6
+        self.assertEqual(g.score,20); g.carried=6
         self.assertFalse(named(g.step(controls(interact=True)),'deposit'))
         g.step(); g.step(controls(interact=True))
-        self.assertTrue(g.lanterns[0]['lit']); self.assertEqual(g.score,200)
+        self.assertTrue(g.lanterns[0]['lit']); self.assertEqual(g.score,150)
 
     def test_nearest_tie_id_and_only_remaining(self):
         g=Game(scenario=quiet(player={'carried':10},lanterns=[{'id':'L2','pos':[1,0,0]},{'id':'L1','pos':[-1,0,0],'deposited':8}]))
@@ -170,7 +170,7 @@ class ContractTests(unittest.TestCase):
         lamps=[{'id':'L'+str(i),'lit':True} for i in range(1,5)]+[{'id':'L5','pos':[0,0,0],'deposited':9}]
         g=Game(scenario=quiet(player={'carried':1},lanterns=lamps,time_left_s=1/60))
         r=replay(g,100,[{'tick':0,'interact':True}])
-        self.assertEqual(r[-1],dict(type='end',ticks=1,state='won',score=260))
+        self.assertEqual(r[-1],dict(type='end',ticks=1,state='won',score=1001))
 
     def test_dawn_exact_step(self):
         g=Game(scenario=quiet(time_left_s=1)); r=replay(g,1000)

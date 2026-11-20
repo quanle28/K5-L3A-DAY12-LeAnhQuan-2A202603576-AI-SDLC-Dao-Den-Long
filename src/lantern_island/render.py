@@ -77,10 +77,8 @@ class Scene:
 
     def disc(self, pos, radius, color, n=32):
         x,y,z = pos
-        for i in range(n):
-            a,b=i*math.tau/n,(i+1)*math.tau/n
-            self.polygon([(x,y,z),(x+radius*math.sin(a),y,z+radius*math.cos(a)),
-                          (x+radius*math.sin(b),y,z+radius*math.cos(b))], color)
+        # A flat convex disc needs one clipped polygon, not n triangle submissions.
+        self.polygon([(x+radius*math.sin(i*math.tau/n),y,z+radius*math.cos(i*math.tau/n)) for i in range(n)],color)
 
     def flush_faces(self):
         for _,points,color in sorted(self.faces,key=lambda f:f[0],reverse=True):
@@ -97,12 +95,14 @@ class Scene:
                (outer*math.cos(b),y,outer*math.sin(b)),(inner*math.cos(b),y,inner*math.sin(b))]
             self.polygon(p,color)
 
-    def draw(self,game,yaw,w,h,message='',paused=False,started=True,total_score=0):
+    def draw(self,game,yaw,w,h,message='',paused=False,started=True,total_score=0,colorblind=False):
         self.w,self.h,self.f=w,h,min(w,h)*.98
         self.sy,self.cy=math.sin(math.radians(yaw)),math.cos(math.radians(yaw))
         self.sp,self.cp=math.sin(.48),math.cos(.48)
         self.eye=[game.pos[0]-self.sy*13,game.pos[1]+8,game.pos[2]-self.cy*13]
-        c=self.canvas; p=PALETTE
+        c=self.canvas; p=dict(PALETTE); self.colorblind=colorblind
+        if colorblind: p.update(outline='#00B3FF',danger='#FFFFFF')
+        self.palette=p
         c.delete('all')
         c.create_rectangle(0,0,w,h,fill=p['sky'],outline='')
         for i in range(35):
@@ -117,10 +117,10 @@ class Scene:
         self.ambient=.15+.55*lit/len(game.lanterns)
         grass=mix(p['grass'],'#000000',.1*(1-self.ambient))
         for cx,cz,r in game.world.islands:
+            self.polygon([(cx+r*math.cos(i*math.tau/40),0,cz+r*math.sin(i*math.tau/40)) for i in range(40)],grass)
             for i in range(40):
                 a,b=i*math.tau/40,(i+1)*math.tau/40
                 v=(cx+r*math.cos(a),0,cz+r*math.sin(a)); q=(cx+r*math.cos(b),0,cz+r*math.sin(b))
-                self.polygon([(cx,0,cz),v,q],grass)
                 self.polygon([v,(cx+(v[0]-cx)*.85,-5,cz+(v[2]-cz)*.85),
                               (cx+(q[0]-cx)*.85,-5,cz+(q[2]-cz)*.85),q],p['sand'])
         if game.night==2:
@@ -143,7 +143,7 @@ class Scene:
                 self.polygon([(12*sign,0,0),(24*sign,0,0),(24*sign,3,0),(12*sign,3,0)],p['sand'])
             self.flush_faces()
         for lamp in game.lanterns:
-            if lamp['lit']:
+            if game.protected(lamp):
                 x,y,z=lamp['pos']; self.disc((x,y+.025,z),6,mix(grass,p['lamp'],.25),24)
         for pad,target,vy,speed in game.world.pads:
             self.disc((pad[0],pad[1]+.03,pad[2]),1,p['gold'],16)
@@ -156,8 +156,10 @@ class Scene:
             self.cone((0,14,0),2.6,1.8,p['gold'],12)
         for l in game.lanterns:
             x,y,z=l['pos']; self.box((x,y,z),.45,3,.45,p['wood'])
-            self.jewel((x,y+3,z),.7,p['lamp'] if l['lit'] else p['unlit'])
-            if l['lit']: self.spark((x,y+3,z),.24,p['core'])
+            low=l['lit'] and not game.protected(l)
+            bright=l['lit'] and (not low or game.sim_tick%60<30)
+            self.jewel((x,y+3,z),.7 if l['lit'] else .56,p['lamp'] if bright else p['unlit'])
+            if bright: self.spark((x,y+3,z),.24,p['core'])
             self.cone((x,y+4,z),1,.4,p['red'])
         for m in game.motes:
             x,y,z=m['pos']; y+=.6+.13*math.sin(game.sim_tick*.06+x)
@@ -165,7 +167,7 @@ class Scene:
         for s in game.shades:
             x,y,z=s['pos']; color=p['stunned'] if s['state']=='stunned' else p['shade']
             self.jewel((x,y,z),.75,color); self.cone((x,y-.15,z),.77,.08,p['outline'])
-            self.spark((x-.22,y+.1,z-.55),.06,p['mote']); self.spark((x+.22,y+.1,z-.55),.06,p['mote'])
+            self.spark((x-.22,y+.1,z-.55),.06,p['outline']); self.spark((x+.22,y+.1,z-.55),.06,p['outline'])
         for d in game.drifters:
             x,y,z=d['pos']; self.jewel((x,y+.4,z),.4,p['drifter'])
             self.box((x,y,z),.25,.1,1.7,p['drifter'])
@@ -194,7 +196,18 @@ class Scene:
                 c.create_polygon(xx,yy,xx+13,yy-5,xx+20,yy+3,xx+5,yy+5,fill=p['gold'])
         for lamp in game.lanterns:
             point=self.project([lamp['pos'][0],lamp['pos'][1]+4.6,lamp['pos'][2]])
-            if point: c.create_text(*point,text=lamp['id']+(' ✓' if lamp['lit'] else ' %d/10'%lamp['deposited']),fill=p['text'],font=('Segoe UI',10,'bold'))
+            if point:
+                px,py=point; low=lamp['lit'] and not game.protected(lamp)
+                c.create_text(px,py,text=lamp['id']+('  %.1f'%game.fuel(lamp) if lamp['lit'] else ' %d/%d'%(lamp['deposited'],game.light_cost(lamp))),fill=p['text'],font=('Segoe UI',10,'bold'))
+                if lamp['lit'] and (not low or game.sim_tick%60<30):
+                    c.create_rectangle(px-35,py+12,px+35,py+19,fill=p['unlit'],outline='')
+                    c.create_rectangle(px-35,py+12,px-35+70*lamp['fuel_units']/6000,py+19,fill=p['danger'] if low else p['gold'],outline='')
+                    if low and colorblind: c.create_text(px+45,py+15,text='⚠',fill=p['danger'],font=('Segoe UI',12,'bold'))
+            if not lamp['lit']:
+                paper=self.project([lamp['pos'][0],lamp['pos'][1]+3,lamp['pos'][2]])
+                if paper:
+                    px,py=paper
+                    c.create_line(px-6,py-9,px+2,py-3,px-3,py+2,px+5,py+9,fill=p['sky'],width=2)
         self.hud(game,w,h,message,total_score)
 
     @staticmethod
@@ -202,19 +215,22 @@ class Scene:
         return game.night==3 and game.wind_enabled and (game.sim_tick%1800>=1680 or game.wind['active'])
 
     def hud(self,g,w,h,message,total_score):
-        c=self.canvas; p=PALETTE; lit=sum(l['lit'] for l in g.lanterns)
+        c=self.canvas; p=self.palette; lit=sum(l['lit'] for l in g.lanterns)
         c.create_rectangle(16,16,250,104,fill=p['fog'],outline=p['gold'])
         c.create_text(30,39,anchor='w',text='NGỌN LỬA  '+'♥ '*g.flames,fill=p['lamp'],font=('Segoe UI',14,'bold'))
         c.create_text(30,73,anchor='w',text='Đêm %d · %s'%(g.night,g.world.names[g.night]),fill=p['text'],font=('Segoe UI',11))
         c.create_rectangle(w/2-90,16,w/2+90,80,fill=p['fog'],outline=p['gold'])
         seconds=max(0,math.ceil(g.time_left)); danger=seconds<=30
-        c.create_text(w/2,40,text='%02d:%02d'%(seconds//60,seconds%60),fill=p['danger'] if danger and g.tick%30<15 else p['text'],font=('Segoe UI',25,'bold'))
+        clock_text=('⚠ ' if danger and self.colorblind else '')+'%02d:%02d'%(seconds//60,seconds%60)
+        c.create_text(w/2,40,text=clock_text,fill=p['danger'] if danger and g.tick%30<15 else p['text'],font=('Segoe UI',25,'bold'))
         c.create_rectangle(w-255,16,w-16,104,fill=p['fog'],outline=p['gold'])
-        c.create_text(w-135,40,text='ĐÈN %d / %d'%(lit,len(g.lanterns)),fill=p['text'],font=('Segoe UI',14,'bold'))
+        c.create_text(w-135,40,text='ĐÈN %d/%d · CẦN %d'%(lit,len(g.lanterns),g.required_lights),fill=p['text'],font=('Segoe UI',12,'bold'))
         c.create_text(w-135,75,text='Điểm %d · Tổng %d'%(g.score,total_score),fill=p['gold'],font=('Segoe UI',11))
-        for i in range(10):
-            xx=w/2-150+i*30
-            c.create_rectangle(xx,h-64,xx+24,h-41,fill=p['mote'] if i<g.carried else p['fog'],outline=p['gold'])
+        c.create_text(w/2,h-84,text='Đom đóm %d / %d · Giữ đèn sáng tới bình minh'%(g.carried,g.capacity),fill=p['text'],font=('Segoe UI',11))
+        gap=300/g.capacity
+        for i in range(g.capacity):
+            xx=w/2-150+i*gap
+            c.create_rectangle(xx,h-64,xx+gap-4,h-41,fill=p['mote'] if i<g.carried else p['fog'],outline=p['gold'])
         c.create_text(w/2,h-23,text='WASD · SPACE nhảy · SHIFT lướt · F tỏa sáng · P / ESC tạm dừng',fill=p['text'],font=('Segoe UI',10))
         c.create_text(w-110,h-63,text='Lướt %.1fs'%max(0,g.dash_cd_ticks/60),fill=p['gold'],font=('Segoe UI',11))
         c.create_text(w-110,h-39,text='Tỏa sáng %.1fs'%max(0,g.pulse_cd_ticks/60),fill=p['lamp'],font=('Segoe UI',11))
@@ -228,11 +244,16 @@ class Scene:
             a=i*math.tau/8
             c.create_line(xx+7*math.cos(a),yy+7*math.sin(a),xx+12*math.cos(a),yy+12*math.sin(a),fill=pulse_color,width=2)
         if g.charm_ticks: c.create_text(110,h-58,text='BÙA GIÓ %.1fs'%(g.charm_ticks/60),fill=p['red'],font=('Segoe UI',12,'bold'))
+        nearby=[l for l in g.lanterns if g.accepts(l) and distance(g.pos,l['pos'])<=TUNING['interact_radius']]
+        if nearby:
+            near=min(nearby,key=lambda e:(distance(g.pos,e['pos']),e['id']))
+            prompt='E — Châm dầu (%.1f/100)'%g.fuel(near) if near['lit'] else 'E — Nạp ánh sáng (%d/%d)'%(near['deposited'],g.light_cost(near))
+            c.create_text(w/2,h-125,text=prompt,fill=p['gold'],font=('Segoe UI',16,'bold'))
         unlit=[l for l in g.lanterns if not l['lit']]
         if unlit:
             nearest=min(unlit,key=lambda e:(distance(g.pos,e['pos']),e['id']))
             if distance(g.pos,nearest['pos'])<=2:
-                c.create_text(w/2,h-105,text='E — Nạp ánh sáng (%d/10)'%nearest['deposited'],fill=p['gold'],font=('Segoe UI',16,'bold'))
+                pass  # Interaction prompt above uses the exact receiving-lamp rule.
             else:
                 projected=self.project(nearest['pos'])
                 if projected is None or not (20<projected[0]<w-20 and 110<projected[1]<h-110):

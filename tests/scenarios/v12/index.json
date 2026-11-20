@@ -1,0 +1,104 @@
+[
+  {
+    "name": "fuel-out",
+    "night": 1,
+    "ticks": 65,
+    "event": "lantern_out"
+  },
+  {
+    "name": "refuel",
+    "night": 1,
+    "ticks": 1,
+    "event": "refuel"
+  },
+  {
+    "name": "relight",
+    "night": 1,
+    "ticks": 1,
+    "event": "lantern_lit"
+  },
+  {
+    "name": "capacity",
+    "night": 1,
+    "ticks": 1,
+    "event": "lantern_lit"
+  },
+  {
+    "name": "drain-stack",
+    "night": 1,
+    "ticks": 60,
+    "event": "fuel_drain"
+  },
+  {
+    "name": "drain-pause",
+    "night": 1,
+    "ticks": 121,
+    "event": "fuel_drain"
+  },
+  {
+    "name": "drain-pulse",
+    "night": 1,
+    "ticks": 1,
+    "event": "pulse"
+  },
+  {
+    "name": "refuel-eject",
+    "night": 1,
+    "ticks": 30,
+    "event": "refuel"
+  },
+  {
+    "name": "all-lit-running",
+    "night": 1,
+    "ticks": 60,
+    "event": "night_start"
+  },
+  {
+    "name": "dawn-won-night1",
+    "night": 1,
+    "ticks": 1,
+    "event": "game_over"
+  },
+  {
+    "name": "dawn-lost-night1",
+    "night": 1,
+    "ticks": 1,
+    "event": "game_over"
+  },
+  {
+    "name": "dawn-won-night2",
+    "night": 2,
+    "ticks": 1,
+    "event": "game_over"
+  },
+  {
+    "name": "dawn-lost-night2",
+    "night": 2,
+    "ticks": 1,
+    "event": "game_over"
+  },
+  {
+    "name": "dawn-won-night3",
+    "night": 3,
+    "ticks": 1,
+    "event": "game_over"
+  },
+  {
+    "name": "dawn-lost-night3",
+    "night": 3,
+    "ticks": 1,
+    "event": "game_over"
+  },
+  {
+    "name": "dawn-expiry",
+    "night": 1,
+    "ticks": 1,
+    "event": "game_over"
+  },
+  {
+    "name": "dawn-relight",
+    "night": 1,
+    "ticks": 1,
+    "event": "game_over"
+  }
+]

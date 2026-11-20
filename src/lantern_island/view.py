@@ -54,6 +54,8 @@ class App:
             else: self.screen='dawn'
         elif action=='settings':
             self.settings_return=self.screen; self.screen='settings'
+        elif action=='colorblind':
+            self.settings.colorblind=not self.settings.colorblind; self.settings.save()
         elif action=='back':
             self.settings.save(); self.screen=self.settings_return
         elif action=='menu':
@@ -150,7 +152,7 @@ class App:
 
     def draw(self):
         w,h=self.surface.get_size(); self.buttons=[]; c=self.canvas; p=PALETTE
-        self.scene.draw(self.game,self.yaw,w,h,self.message,total_score=self.campaign.total)
+        self.scene.draw(self.game,self.yaw,w,h,self.message,total_score=self.campaign.total,colorblind=self.settings.colorblind)
         if self.screen=='playing': return
         overlay=pg.Surface((w,h),pg.SRCALPHA); overlay.fill((14,20,48,190)); self.surface.blit(overlay,(0,0))
         c.create_rectangle(w/2-315,h/2-235,w/2+315,h/2+240,fill=p['sky'],outline=p['gold'],width=2)
@@ -158,14 +160,14 @@ class App:
                'pause':'ĐÊM ĐANG NGHỈ','settings':'CÀI ĐẶT','result':'ĐẢO ĐÃ SÁNG LẠI' if self.game.state=='won' else 'THỬ LẠI, MÂY NHÉ','dawn':'BÌNH MINH'}.get(self.screen,'')
         c.create_text(w/2,h/2-180,text=title,fill=p['gold'],font=('Segoe UI',24,'bold'))
         if self.screen=='menu':
-            c.create_text(w/2,h/2-105,text='Ba hòn đảo, một lời hẹn mang ánh sáng trở về.\nMây cùng chiếc nón lá và ngọn đèn nhỏ đang chờ bạn.',fill=p['text'],font=('Segoe UI',13))
+            c.create_text(w/2,h/2-105,text='Đèn có thể cạn dầu — giữ đảo sáng tới bình minh.\nMây cùng chiếc nón lá và ngọn đèn nhỏ đang chờ bạn.',fill=p['text'],font=('Segoe UI',13))
             for dy,text,act in [(0,'Bắt đầu · ENTER','new'),(60,'Cài đặt','settings'),(120,'Thoát','quit')]: self.button(h/2+dy,text,act)
         elif self.screen=='intro':
             story={1:'Ông Đăng: “Đừng sợ đêm. Mỗi đốm sáng là một đường về.”',
                    2:'Ông Đăng: “Qua cầu tre, nhớ nghe tiếng gió lạc.”',
                    3:'Ông Đăng: “Lên tháp chuông, ta sẽ thấy bình minh.”'}[self.game.night]
             hint={1:'Giữ chuột phải / Q,C xoay camera; SHIFT lướt.',2:'Đi qua cầu tre hoặc chạm bục vàng để bay sang đảo kia.',3:'Theo hai dốc lên tầng một; bục vàng đưa Mây lên tầng chuông.'}[self.game.night]
-            c.create_text(w/2,h/2-80,text=story+'\n\nThắp %d đèn trong %d giây. Giữ lại ba Ngọn Lửa.\n\n'%(len(self.game.lanterns),self.game.duration)+hint,fill=p['text'],font=('Segoe UI',12))
+            c.create_text(w/2,h/2-80,text=story+'\n\nGiữ ít nhất %d/%d đèn sáng tới bình minh (%ds).\nĐèn yếu mất bảo vệ; nhấn E để châm dầu.\n\n'%(self.game.required_lights,len(self.game.lanterns),self.game.duration)+hint,fill=p['text'],font=('Segoe UI',12))
             self.button(h/2+55,'Vào Đêm · ENTER','play'); self.button(h/2+115,'Về menu','menu')
         elif self.screen=='pause':
             for i,(text,act) in enumerate([('Tiếp tục · P / ESC','resume'),('Chơi lại Đêm','retry'),('Cài đặt','settings'),('Về menu','menu')]): self.button(h/2-70+i*60,text,act)
@@ -174,8 +176,9 @@ class App:
                 c.create_text(w/2,y-30,text=label+' · %.2f'%(self.settings.volume if label=='Âm lượng' else self.settings.sensitivity),fill=p['text'],font=('Segoe UI',13))
                 c.create_rectangle(w/2-180,y-4,w/2+180,y+4,fill=p['fog'],outline=p['gold'])
                 xx=w/2-180+360*value; c.create_oval(xx-9,y-9,xx+9,y+9,fill=p['gold'],outline='')
-            c.create_text(w/2,h/2+105,text='Giữ chuột phải để xoay camera · Cài đặt được lưu tự động',fill=p['text'],font=('Segoe UI',10))
-            self.button(h/2+165,'Quay lại · ESC','back')
+            c.create_text(w/2,h/2-120,text='Giữ chuột phải xoay camera · Cài đặt lưu tự động',fill=p['text'],font=('Segoe UI',10))
+            self.button(h/2+130,'Bảng màu dễ phân biệt: '+('BẬT' if self.settings.colorblind else 'TẮT'),'colorblind')
+            self.button(h/2+195,'Quay lại · ESC','back')
         elif self.screen=='result':
             c.create_text(w/2,h/2-95,text='Điểm Đêm: %d\nTổng các Đêm đã thắng: %d'%(self.game.score,self.campaign.total),fill=p['text'],font=('Segoe UI',16))
             self.button(h/2+15,'Đêm tiếp theo · ENTER' if self.game.state=='won' and self.game.night<3 else ('Đón Bình Minh · ENTER' if self.game.state=='won' else 'Chơi lại Đêm · ENTER'),'next' if self.game.state=='won' else 'retry')

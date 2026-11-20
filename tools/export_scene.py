@@ -39,7 +39,7 @@ class SvgCanvas:
 
 
 def main():
-    target=ROOT/'docs/proof/phase-2'
+    target=ROOT/'docs/proof/phase-3'
     target.mkdir(parents=True,exist_ok=True)
     for night in (1,2,3):
         canvas=SvgCanvas(1280,720)
